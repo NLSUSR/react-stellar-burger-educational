@@ -1,6 +1,6 @@
 import * as library from "@ya.praktikum/react-developer-burger-ui-components";
-import Style from "./AppHeader.module.sass";
-import Links from "../hocs/Links/Links.jsx";
+import Style from "./app-header.module.sass";
+import Links from "../hocs/links/links.jsx";
 
 const AppHeader = () => {
   const { Logo, BurgerIcon, ListIcon, ProfileIcon } = library;

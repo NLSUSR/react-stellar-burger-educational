@@ -1,4 +1,4 @@
-import Style from "./Overlay.module.sass";
+import Style from "./overlay.module.sass";
 
 const Overlay = () => {
   return (

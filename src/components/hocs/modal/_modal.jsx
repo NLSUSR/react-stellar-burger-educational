@@ -1,4 +1,4 @@
-import Style from "./Modal.module.sass";
+import Style from "./modal.module.sass";
 
 const Modal = () => {
   return (

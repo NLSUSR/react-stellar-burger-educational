@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types"
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import Style from "./AnchorMenu.module.sass";
+import Style from "./anchor-menu.module.sass";
 
-const AnchorMenu = (props) => {
-  const { tabs } = props;
+const AnchorMenu = ({ tabs }) => {
   const [current, setCurrent] = React.useState(tabs[0].value);
 
   return (

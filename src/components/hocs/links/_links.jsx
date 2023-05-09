@@ -1,9 +1,7 @@
-import Style from "./Links.module.sass";
+import Style from "./links.module.sass";
 import PropTypes from "prop-types"
 
-const Links = (props) => {
-  const { state, link, title, image, text } = props;
-
+const Links = ({ state, link, title, image, text }) => {
   let colour;
   state === "active" ? (colour = "#F2F2F3") : (colour = "#8585AD");
 

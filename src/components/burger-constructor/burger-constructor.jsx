@@ -1,11 +1,10 @@
-import Style from "./BurgerConstructor.module.sass";
+import Style from "./burger-constructor.module.sass";
 import * as library from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types.js"
 
-const BurgerConstructor = (props) => {
+const BurgerConstructor = ({ ingredients }) => {
   const { ConstructorElement, DragIcon, CurrencyIcon, Button } = library;
-  const { ingredients } = props;
 
   let bun = {};
   ingredients.map(item => { if (item.type === "bun") { Object.assign(bun, item) } })

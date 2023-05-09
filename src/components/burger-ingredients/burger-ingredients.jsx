@@ -1,11 +1,10 @@
-import Style from "./BurgerIngredients.module.sass";
-import AnchorMenu from "../hocs/AnchorMenu/AnchorMenu.jsx";
-import Ingredients from "../hocs/Ingredients/Ingredients.jsx";
+import Style from "./burger-ingredients.module.sass";
+import AnchorMenu from "../hocs/anchor-menu/anchor-menu.jsx";
+import Ingredients from "../hocs/ingredients/ingredients.jsx";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types.js"
 
-const BurgerIngredients = (props) => {
-  const { ingredients } = props;
+const BurgerIngredients = ({ ingredients }) => {
 
   let buns = [];
   let sauce = [];

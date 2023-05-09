@@ -2,7 +2,7 @@ import React from "react";
 import AppHeader from "../app-header/app-header.jsx";
 import BurgerConstructor from "../burger-constructor/burger-constructor.jsx";
 import BurgerIngrediens from "../burger-ingredients/burger-ingredients.jsx";
-import { api } from "../../utils/api.js";
+import { api } from "../../utils/_api.js";
 
 const App = () => {
   const [state, setState] = React.useState({

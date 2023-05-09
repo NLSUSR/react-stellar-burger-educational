@@ -1,6 +1,6 @@
 import Style from "./burger-ingredients.module.sass";
 import AnchorMenu from "../hocs/anchor-menu/anchor-menu.jsx";
-import Ingredients from "../hocs/ingredients/ingredients.jsx";
+import Ingredients from "../hocs/ingredients/_ingredients.jsx";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types.js"
 

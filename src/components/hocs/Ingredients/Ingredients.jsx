@@ -1,13 +1,11 @@
 import Style from "./Ingredients.module.sass";
 import React from "react";
 import PropTypes from "prop-types";
-import { iconPropTypes } from "../../../utils/prop-types.js";
-import {
-  Counter,
-  CurrencyIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { ingredientPropType } from "../../../utils/prop-types.js";
+import * as library from "@ya.praktikum/react-developer-burger-ui-components";
 
 const Ingredients = (props) => {
+  const { Counter, CurrencyIcon } = library;
   const [count, setCount] = React.useState(0);
   const click = () => setCount(count + 1);
 
@@ -43,11 +41,9 @@ const Ingredients = (props) => {
   );
 };
 
-Counter.propTypes = {
-  count: PropTypes.number.isRequired,
-  size: PropTypes.string.isRequired,
+Ingredients.propTypes = {
+  title: PropTypes.string.isRequired,
+  array: PropTypes.arrayOf(ingredientPropType.isRequired),
 };
-
-CurrencyIcon.propTypes = { iconPropTypes };
 
 export default Ingredients;

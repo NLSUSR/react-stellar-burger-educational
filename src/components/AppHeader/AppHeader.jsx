@@ -1,12 +1,10 @@
 import * as library from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import { iconPropTypes } from "../../utils/prop-types";
 import Style from "./AppHeader.module.sass";
 import Links from "../hocs/Links/Links.jsx";
 
-const { Logo, BurgerIcon, ListIcon, ProfileIcon } = library;
-
 const AppHeader = () => {
+  const { Logo, BurgerIcon, ListIcon, ProfileIcon } = library;
+
   return (
     <header className={Style.header}>
       <nav className={Style.navigation}>
@@ -42,15 +40,6 @@ const AppHeader = () => {
       </nav>
     </header>
   );
-};
-
-[BurgerIcon, ListIcon, ProfileIcon].forEach(item => { item.propTypes = { iconPropTypes } });
-
-Links.propTypes = {
-  image: PropTypes.element.isRequired,
-  text: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
-  state: PropTypes.string,
 };
 
 export default AppHeader;

@@ -1,11 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import AppHeader from "../AppHeader/AppHeader.jsx";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor.jsx";
 import BurgerIngrediens from "../BurgerIngredients/BurgerIngredients.jsx";
 import { api } from "../../utils/Api.js";
-import burger from "../../utils/burger.json";
-import { ingredientPropType } from "../../utils/prop-types.js";
 
 const App = () => {
   const [state, setState] = React.useState({
@@ -34,16 +31,10 @@ const App = () => {
       <AppHeader />
       <main className="main">
         <BurgerIngrediens ingredients={state.data} />
-        <BurgerConstructor ingredients={burger} />
+        <BurgerConstructor ingredients={state.data} />
       </main>
     </>
   );
 };
-
-[BurgerIngrediens, BurgerConstructor].forEach(item => {
-  item.propTypes = {
-    ingridients: PropTypes.arrayOf(ingredientPropType.isRequired),
-  }
-});
 
 export default App;

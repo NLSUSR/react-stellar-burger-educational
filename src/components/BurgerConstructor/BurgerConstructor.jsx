@@ -1,12 +1,14 @@
 import Style from "./BurgerConstructor.module.sass";
 import * as library from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { ingredientPropType, iconPropTypes } from "../../utils/prop-types.js"
-
-const { ConstructorElement, DragIcon, CurrencyIcon, Button } = library;
+import { ingredientPropType } from "../../utils/prop-types.js"
 
 const BurgerConstructor = (props) => {
+  const { ConstructorElement, DragIcon, CurrencyIcon, Button } = library;
   const { ingredients } = props;
+
+  let bun = {};
+  ingredients.map(item => { if (item.type === "bun") { Object.assign(bun, item) } })
 
   return (
     <section className={Style.container}>
@@ -16,9 +18,9 @@ const BurgerConstructor = (props) => {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${ingredients[0].name} (верх)`}
-            price={ingredients[0].price}
-            thumbnail={ingredients[0].image}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </li>
         {/* ингриденты */}
@@ -53,9 +55,9 @@ const BurgerConstructor = (props) => {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${ingredients[0].name} (низ)`}
-            price={ingredients[0].price}
-            thumbnail={ingredients[0].image}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </li>
       </ul>
@@ -82,27 +84,5 @@ const BurgerConstructor = (props) => {
 BurgerConstructor.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropType.isRequired)
 }
-
-ConstructorElement.propTypes = {
-  text: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  type: PropTypes.oneOf(["top", "bottom"]),
-  isLocked: PropTypes.bool,
-  extraClass: PropTypes.string,
-  handleClose: PropTypes.func,
-};
-
-[DragIcon, CurrencyIcon].forEach(item => { item.propTypes = { iconPropTypes } })
-
-
-Button.propTypes = {
-  type: PropTypes.oneOf(["secondary", "primary"]).isRequired,
-  size: PropTypes.oneOf(["small", "medium", "large"]).isRequired,
-  onClick: PropTypes.func.isRequired,
-  extraClass: PropTypes.string,
-  htmlType: PropTypes.oneOf(["button", "submit", "reset"]).isRequired,
-  children: PropTypes.string,
-};
 
 export default BurgerConstructor;

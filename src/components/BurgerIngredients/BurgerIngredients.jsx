@@ -54,9 +54,4 @@ BurgerIngredients.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropType.isRequired)
 }
 
-Ingredients.propTypes = {
-  title: PropTypes.string.isRequired,
-  array: PropTypes.arrayOf(ingredientPropType.isRequired),
-};
-
 export default BurgerIngredients;

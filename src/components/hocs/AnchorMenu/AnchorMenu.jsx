@@ -23,10 +23,11 @@ const AnchorMenu = (props) => {
   );
 };
 
-Tab.propTypes = {
-  active: PropTypes.bool.isRequired,
-  value: PropTypes.string.isRequired,
-  onClick: PropTypes.func
+AnchorMenu.propTypes = {
+  tabs: PropTypes.arrayOf(PropTypes.shape({
+    value:PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  }))
 }
 
 export default AnchorMenu;

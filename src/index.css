@@ -1,3 +1,20 @@
+@import url(https://necolas.github.io/normalize.css/latest/normalize.css);
+@import url(https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Iceland&display=swap);
+
+html,
 body {
   margin: 0;
+  padding: 0;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  gap: 40px;
+}
+
+* {
+  /* outline: 1px dashed red; */
 }

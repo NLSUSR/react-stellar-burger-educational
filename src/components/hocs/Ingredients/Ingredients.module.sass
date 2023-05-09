@@ -1,0 +1,82 @@
+@import "../../../utils/constants.sass?fontIL=#{$fontIL}"
+@import "../../../utils/constants.sass?fontJBM=#{$fontJBM}"
+
+.container
+  margin: 0 0 40px 0
+  padding: 0
+
+.title
+  margin: 0 0 24px 0
+  padding: 0
+  transform: translateY(1px)
+  font-family: $fontJBM
+  font-style: normal
+  font-weight: 700
+  font-size: 24px
+  line-height: 30px
+  display: flex
+  align-items: center
+  color: #F2F2F3
+
+.list
+  margin-left: 15px
+  padding: 0
+  list-style: none
+  display: grid
+  grid-template-columns: repeat(2,272px)
+  gap:  32px 24px
+
+.item
+  margin: 0
+  padding: 0
+  width: 272px
+  height: 208px
+  // max-width: fill
+  // max-height: fit-content
+
+.wrapper
+  margin: 0 16px
+  padding: 0
+  // width: 272px
+  // height: 208px
+  display: flex
+  flex-direction: column
+  align-items: center
+  position: relative
+
+.counter
+  position: absolute
+  top: 0
+  right: -16px
+
+.image
+  margin: 0
+  padding: 0
+  width: 240px
+  height: 120px
+
+.price
+  margin: 8px 0 0 1px
+  padding: 0
+  width: fit-content
+  height: 24px
+  font-family: $fontIL
+  font-size: 28px
+  line-height: 24px
+  display: flex
+  align-items: center
+  gap: 8px
+
+.name
+  margin: 9px 0 0 3px
+  width: 272px
+  text-align: center
+  font-family: $fontJBM
+  font-size: 16px
+  line-height: 24px
+  color: #F2F2F3
+
+.currency
+  // width: 22px
+  // height: 22px
+

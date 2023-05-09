@@ -1,0 +1,33 @@
+@import "../../utils/constants.sass?fontJBM=#{$fontJBM}"
+@import "../../utils/constants.sass?shadow=#{$shadow}"
+
+.header
+  width: 100%
+  box-shadow: $shadow
+
+.navigation
+  margin: 0 auto
+  width: 1280px
+  height: 88px
+  display: flex
+  align-items: center
+
+.navigation-list
+  margin: 0
+  padding: 0
+  width: 1280px
+  list-style: none
+  display: flex
+  justify-content: space-between
+
+.navigation-item
+  &:nth-child(2)
+    margin-left: -192px
+
+.logo
+  transform: translateX(-84px)
+  display: flex
+  align-items: center
+  justify-content: center
+  padding: 0
+  width: 290px

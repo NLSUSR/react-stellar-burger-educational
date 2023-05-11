@@ -4,7 +4,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Style from "./anchor-menu.module.sass";
 
 const AnchorMenu = ({ tabs }) => {
-  const [current, setCurrent] = React.useState(tabs[0].value);
+  const [current, setCurrent] = React.useState("Булки");
 
   return (
     <ul className={Style.list}>
@@ -14,7 +14,7 @@ const AnchorMenu = ({ tabs }) => {
             active={current === item.value}
             value={item.value}
             onClick={setCurrent}
-            children={item.name}
+            children={<a href={item.id} className={Style.id}>{item.name}</a>}
           />
         </li>
       ))}
@@ -24,7 +24,7 @@ const AnchorMenu = ({ tabs }) => {
 
 AnchorMenu.propTypes = {
   tabs: PropTypes.arrayOf(PropTypes.shape({
-    value:PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
   }))
 }

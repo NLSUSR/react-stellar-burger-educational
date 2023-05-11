@@ -1,16 +1,14 @@
 import Style from "./burger-ingredients.module.sass";
-import AnchorMenu from "../hocs/anchor-menu/anchor-menu.jsx";
-import Ingredients from "../hocs/ingredients/ingredients.jsx";
+import AnchorMenu from "../util-components/anchor-menu/anchor-menu.jsx";
+import Ingredients from "../util-components/ingredients/ingredients.jsx";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types.js"
 
 const BurgerIngredients = ({ ingredients }) => {
-
   let buns = [];
   let sauce = [];
   let main = [];
 
-  // eslint-disable-next-line array-callback-return
   ingredients.map(item => {
     if (item.type === "bun") {
       buns.push(item);
@@ -26,28 +24,19 @@ const BurgerIngredients = ({ ingredients }) => {
       <h1 className={Style.title}>{"Соберите бургер"}</h1>
       <AnchorMenu
         tabs={[
-          { value: "Булки", name: "Булки" },
-          { value: "Соусы", name: "Соусы" },
-          { value: "Начинки", name: "Начинки" },
+          { value: "Булки", name: "Булки", id: "#buns" },
+          { value: "Соусы", name: "Соусы", id: "#sauce" },
+          { value: "Начинки", name: "Начинки", id: "#main" },
         ]}
       />
       <div className={`${Style.ingredients} custom-scroll`}>
-        <Ingredients title={"Булки"} array={buns} />
-        <Ingredients title={"Соусы"} array={sauce} />
-        <Ingredients title={"Начинки"} array={main} />
+        <Ingredients id={"buns"} title={"Булки"} array={buns} />
+        <Ingredients id={"sauce"} title={"Соусы"} array={sauce} />
+        <Ingredients id={"main"} title={"Начинки"} array={main} />
       </div>
     </section>
   );
 };
-
-AnchorMenu.propTypes = {
-  tabs: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.string,
-      name: PropTypes.string
-    })
-  )
-}
 
 BurgerIngredients.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropType.isRequired)

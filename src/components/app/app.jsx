@@ -11,20 +11,15 @@ const App = () => {
     isLoading: false,
   });
 
-  const getData = () => {
+  React.useEffect(() => {
     setState({ ...state, isLoading: true });
-    api
-      .getData()
-      .then((response) =>
-        setState({ success: true, data: response.data, isLoading: false })
-      )
-      .catch((error) => {
-        api.responseError(error);
-        setState({ ...state, isLoading: false });
-      });
-  };
-
-  React.useEffect(() => getData(), []);
+    api.getData().then((response) => {
+      setState({ success: true, data: response.data, isLoading: false });
+    }).catch((error) => {
+      api.responseError(error);
+      setState({ ...state, isLoading: false });
+    });
+  }, []);
 
   return (
     <>

@@ -1,81 +1,35 @@
 import Style from "./burger-constructor.module.sass";
-import * as library from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types.js"
+import React from "react";
+import Buns from "../util-components/buns/buns.jsx";
+import Recipe from "../util-components/recipe/recipe";
+import Invoice from "../util-components/invoice/invoice.jsx";
+import Modal from "../modal/modal.jsx";
+import OrderDetails from "../order-details/order-details.jsx";
 
 const BurgerConstructor = ({ ingredients }) => {
-  const { ConstructorElement, DragIcon, CurrencyIcon, Button } = library;
+  const [order, setOrder] = React.useState(null);
 
-  let bun = {};
-  ingredients.map(item => { if (item.type === "bun") { Object.assign(bun, item) } })
+  const showOrder = () => {
+    setOrder(Math.floor(Math.random() * 999999))
+  };
+
+  const hideOrder = () => {
+    setOrder(null)
+  };
 
   return (
     <section className={Style.container}>
-      {/* булка верхняя */}
       <ul className={Style.list}>
-        <li className={Style.top}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${bun.name} (верх)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </li>
-        {/* ингриденты */}
+        <Buns array={ingredients} type={"top"} text={"верх"} lock={true} />
         <li className={`${Style.ingredients} custom-scroll`}>
-          <ul className={Style["ingredients-list"]}>
-            {
-              // eslint-disable-next-line array-callback-return
-              ingredients.map((item, index) => {
-                if (item.type !== "bun") {
-                  return (
-                    <li key={index} className={Style["ingredients-item"]}>
-                      <div className={Style.drag}>
-                        <DragIcon type="primary" />
-                      </div>
-                      <div className={Style.element}>
-                        <ConstructorElement
-                          isLocked={false}
-                          text={item.name}
-                          price={item.price}
-                          thumbnail={item.image}
-                        />
-                      </div>
-                    </li>
-                  );
-                }
-              })
-            }
-          </ul>
+          <Recipe array={ingredients} />
         </li>
-        {/* булка нижняя */}
-        <li className={Style.bottom}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${bun.name} (низ)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </li>
+        <Buns array={ingredients} type={"bottom"} text={"низ"} lock={true} />
       </ul>
-      {/* чек */}
-      <div className={Style.wrapper}>
-        <div className={Style.receipt}>
-          <p className={`${Style.total} text text_type_digits-medium`}>{610}</p>
-          <div className={Style.currency}>
-            <CurrencyIcon type="primary" />
-          </div>
-        </div>
-        <Button
-          type="primary"
-          size="large"
-          onClick={() => { }}
-          htmlType="submit"
-          children={"Оформить заказ"}
-        />
-      </div>
+      <Invoice click={showOrder} />
+      {order && <Modal closeModal={hideOrder} children={<OrderDetails order={order} />} />}
     </section>
   );
 };

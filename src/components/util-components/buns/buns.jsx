@@ -1,4 +1,3 @@
-
 import Style from "./buns.module.sass";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 

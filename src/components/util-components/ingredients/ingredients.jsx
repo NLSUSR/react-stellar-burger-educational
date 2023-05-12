@@ -52,7 +52,7 @@ const Ingredients = ({ id, title, array }) => {
           })
         }
       </ul>
-      {ingredient.isToggle && <Modal closeModal={hideIngredient} children={<IngredientDetails data={ingredient.data} />} />}
+      {ingredient.isToggle && <Modal closeModal={hideIngredient} forModal={<IngredientDetails data={ingredient.data} />} />}
     </div>
   );
 };

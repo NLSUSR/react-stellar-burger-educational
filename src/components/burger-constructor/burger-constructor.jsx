@@ -29,7 +29,7 @@ const BurgerConstructor = ({ ingredients }) => {
         <Buns array={ingredients} type={"bottom"} text={"низ"} lock={true} />
       </ul>
       <Invoice click={showOrder} />
-      {order && <Modal closeModal={hideOrder} forModal={<OrderDetails order={order} />} />}
+      {order && <Modal closeModal={hideOrder} forModal={<OrderDetails forOrder={order} />} />}
     </section>
   );
 };

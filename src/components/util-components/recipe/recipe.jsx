@@ -1,5 +1,7 @@
 import Style from "./recipe.module.sass"
 import * as library from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types"
+import { ingredientPropType } from "../../../utils/prop-types.js"
 
 const Recipe = ({ array }) => {
   const { DragIcon, ConstructorElement } = library;
@@ -29,5 +31,9 @@ const Recipe = ({ array }) => {
     </ul>
   )
 };
+
+Recipe.propTypes = {
+  array: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
+}
 
 export default Recipe;

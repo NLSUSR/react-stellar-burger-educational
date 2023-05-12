@@ -26,7 +26,7 @@ AnchorMenu.propTypes = {
   tabs: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
-  }))
+  }).isRequired).isRequired
 }
 
 export default AnchorMenu;

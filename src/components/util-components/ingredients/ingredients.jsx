@@ -58,8 +58,9 @@ const Ingredients = ({ id, title, array }) => {
 };
 
 Ingredients.propTypes = {
+  id: PropTypes.string.isRequired ,
   title: PropTypes.string.isRequired,
-  array: PropTypes.arrayOf(ingredientPropType.isRequired),
+  array: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
 };
 
 export default Ingredients;

@@ -3,21 +3,22 @@ import AnchorMenu from "../util-components/anchor-menu/anchor-menu.jsx";
 import Ingredients from "../util-components/ingredients/ingredients.jsx";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types.js"
+import React from "react";
 
 const BurgerIngredients = ({ ingredients }) => {
-  let buns = [];
-  let sauce = [];
-  let main = [];
+  const [state, setState] = React.useState({
+    buns: [],
+    sauce: [],
+    main: []
+  })
 
-  ingredients.map(item => {
-    if (item.type === "bun") {
-      buns.push(item);
-    } else if (item.type === "sauce") {
-      sauce.push(item);
-    } else if (item.type === "main") {
-      main.push(item);
-    }
-  });
+  React.useEffect(() => {
+    setState({
+      buns: ingredients.filter(i => i.type === "bun"),
+      sauce: ingredients.filter(i => i.type === "sauce"),
+      main: ingredients.filter(i => i.type === "main")
+    })
+  }, [ingredients])
 
   return (
     <section className={Style.container}>
@@ -30,9 +31,9 @@ const BurgerIngredients = ({ ingredients }) => {
         ]}
       />
       <div className={`${Style.ingredients} custom-scroll`}>
-        <Ingredients id={"buns"} title={"Булки"} array={buns} />
-        <Ingredients id={"sauce"} title={"Соусы"} array={sauce} />
-        <Ingredients id={"main"} title={"Начинки"} array={main} />
+        <Ingredients id={"buns"} title={"Булки"} array={state.buns} />
+        <Ingredients id={"sauce"} title={"Соусы"} array={state.sauce} />
+        <Ingredients id={"main"} title={"Начинки"} array={state.main} />
       </div>
     </section>
   );

@@ -5,4 +5,3 @@ const Storage = class {
 }
 
 export const storage = new Storage();
-

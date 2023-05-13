@@ -6,14 +6,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 const Modal = ({ forModal, closeModal }) => {
-  const handleOverlayClose = event => { if (event.target === event.currentTarget) { closeModal() } };
-  const handleEscapeClose = event => { if (event.key === "Escape") { closeModal() } };
+  const handleEscapeClose = event => event.key === "Escape" ? closeModal() : null;
 
   React.useEffect(() => {
-    document.addEventListener("click", handleOverlayClose);
     document.addEventListener("keydown", handleEscapeClose);
     return () => {
-      document.removeEventListener("click", handleOverlayClose);
       document.removeEventListener("keydown", handleEscapeClose);
     }
   }, []);
@@ -21,14 +18,15 @@ const Modal = ({ forModal, closeModal }) => {
   return (
     ReactDOM.createPortal(
       (
-        <ModalOverlay overlayClose={handleOverlayClose} forOverlay={
+        <div className={Style.container}>
+          <ModalOverlay overlayClose={event => event.target === event.currentTarget ? closeModal() : null} />
           <div className={Style.modal}>
-            <div onClick={closeModal} className={Style.close}>
+            <div className={Style.close} onClick={closeModal}>
               <CloseIcon type="primary" />
             </div>
             {forModal}
           </div>
-        } />
+        </div>
       ), document.querySelector("#modal")
     )
   )

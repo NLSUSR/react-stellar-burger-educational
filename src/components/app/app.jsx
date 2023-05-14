@@ -1,8 +1,8 @@
 import React from "react";
-import AppHeader from "../AppHeader/AppHeader.jsx";
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor.jsx";
-import BurgerIngrediens from "../BurgerIngredients/BurgerIngredients.jsx";
-import { api } from "../../utils/Api.js";
+import AppHeader from "../app-header/app-header.jsx";
+import BurgerConstructor from "../burger-constructor/burger-constructor.jsx";
+import BurgerIngrediens from "../burger-ingredients/burger-ingredients.jsx";
+import { api } from "../../utils/api.js";
 
 const App = () => {
   const [state, setState] = React.useState({
@@ -11,20 +11,15 @@ const App = () => {
     isLoading: false,
   });
 
-  const getData = () => {
+  React.useEffect(() => {
     setState({ ...state, isLoading: true });
-    api
-      .getData()
-      .then((response) =>
-        setState({ success: true, data: response.data, isLoading: false })
-      )
-      .catch((error) => {
-        api.responseError(error);
-        setState({ ...state, isLoading: false });
-      });
-  };
-
-  React.useEffect(() => getData(), []);
+    api.getData().then((response) => {
+      setState({ success: true, data: response.data, isLoading: false });
+    }).catch((error) => {
+      api.responseError(error);
+      setState({ ...state, isLoading: false });
+    });
+  }, []);
 
   return (
     <>

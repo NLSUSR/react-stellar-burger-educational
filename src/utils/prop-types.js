@@ -15,9 +15,4 @@ const ingredientPropType = PropTypes.shape({
   __v: PropTypes.number.isRequired
 });
 
-const iconPropTypes = PropTypes.shape({
-  type: PropTypes.oneOf(["primary", "secondary", "error", "success"]).isRequired,
-  onClick: PropTypes.func
-});
-
-export { ingredientPropType, iconPropTypes }
+export {ingredientPropType};

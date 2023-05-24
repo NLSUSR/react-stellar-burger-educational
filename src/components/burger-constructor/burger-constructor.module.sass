@@ -1,9 +1,18 @@
 .container
   margin-top: 100px
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+
+.top
+  margin-bottom: 16px
+  margin-left: 48px
+
+.bottom
+  margin-top: 16px
+  margin-left: 48px
 
 .list
-  margin: 0
-  padding: 0
   list-style: none
 
 .ingredients
@@ -11,5 +20,5 @@
   max-height: 464px
   overflow-y: scroll
 
-.ingredients-list
-  padding: 0
+.hide-scroll
+  overflow: hidden

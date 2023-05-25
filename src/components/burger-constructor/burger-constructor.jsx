@@ -32,7 +32,7 @@ const BurgerConstructor = () => {
           API.responseError(error);
         });
     }
-  }, [price]);
+  }, []);
 
   const showOrder = () => {
     open();
@@ -82,10 +82,9 @@ const BurgerConstructor = () => {
       <Invoice click={showOrder} />
 
       {modalState ? (
-        <Modal
-          closeModal={hideOrder}
-          forModal={<OrderDetails forOrder={order.number} />}
-        />
+        <Modal closeModal={hideOrder}>
+          <OrderDetails>{order.number}</OrderDetails>
+        </Modal>
       ) : (
         modalState
       )}

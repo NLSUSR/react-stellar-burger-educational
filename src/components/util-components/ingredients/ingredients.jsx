@@ -33,21 +33,21 @@ const Ingredients = ({ id, title, array }) => {
     }
   };
 
-  // const [ingredient, setIngredient] = React.useState({
-  //   data: {},
-  // });
+  const [ingredient, setIngredient] = React.useState({
+    data: {},
+  });
 
-  // const { modalState, open, close } = useModal();
+  const { modalState, open, close } = useModal();
 
-  // const showIngredient = (object) => {
-  //   setIngredient({ data: object });
-  //   open();
-  // };
+  const showIngredient = (object) => {
+    setIngredient({ data: object });
+    open();
+  };
 
-  // const hideIngredient = () => {
-  //   setIngredient({ data: {} });
-  //   close();
-  // };
+  const hideIngredient = () => {
+    setIngredient({ data: {} });
+    close();
+  };
 
   return (
     <div className={Style.container}>
@@ -61,8 +61,8 @@ const Ingredients = ({ id, title, array }) => {
               key={index}
               className={Style.item}
               onClick={() => {
-                createBurger(item);
-                // showIngredient(item);
+                // createBurger(item);
+                showIngredient(item);
               }}
             >
               <div className={Style.wrapper}>
@@ -80,22 +80,21 @@ const Ingredients = ({ id, title, array }) => {
           );
         })}
       </ul>
-      {/* {modalState ? (
-        <Modal
-          closeModal={hideIngredient}
-          forModal={<IngredientDetails data={ingredient.data} />}
-        />
+      {modalState ? (
+        <Modal closeModal={hideIngredient}>
+          <IngredientDetails data={ingredient.data} />
+        </Modal>
       ) : (
         modalState
-      )} */}
+      )}
     </div>
   );
 };
 
 Ingredients.propTypes = {
-  id: PropTypes.string.isRequired ,
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  array: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
+  array: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 };
 
 export default Ingredients;

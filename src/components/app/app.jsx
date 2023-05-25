@@ -94,20 +94,13 @@ const App = () => {
   );
 
   return (
-    <Context.Provider
-      value={ContextValue}
-      children={
-        <React.Fragment>
-          <header className={Style.header}>
-            <AppHeader />
-          </header>
-          <main className={Style.main}>
-            <BurgerIngrediens ingredients={data.ingredients} />
-            <BurgerConstructor />
-          </main>
-        </React.Fragment>
-      }
-    />
+    <Context.Provider value={ContextValue}>
+      <AppHeader />
+      <main className={Style.main}>
+        <BurgerIngrediens />
+        <BurgerConstructor />
+      </main>
+    </Context.Provider>
   );
 };
 

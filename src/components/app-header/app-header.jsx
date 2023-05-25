@@ -6,6 +6,7 @@ const AppHeader = () => {
   const { Logo, BurgerIcon, ListIcon, ProfileIcon } = library;
 
   return (
+    <header className={Style.header}>
     <nav className={Style.navigation}>
       <ul className={Style["navigation-list"]}>
         <li className={`${Style["navigation-item"]} pl-5 pt-4 pr-5 pb-4`}>
@@ -43,6 +44,7 @@ const AppHeader = () => {
         </li>
       </ul>
     </nav>
+    </header>
   );
 };
 

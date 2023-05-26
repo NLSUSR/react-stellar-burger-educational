@@ -3,64 +3,98 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../../utils/prop-types.js";
 import * as library from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../../modal/modal.jsx"
-import IngredientDetails from "../../ingredient-details/ingredient-details.jsx"
+import Modal from "../../modal/modal.jsx";
+import IngredientDetails from "../../ingredient-details/ingredient-details.jsx";
+import Context from "../../../services/contexts/app-context";
+import useModal from "../../../services/hooks/useModal";
 
 const Ingredients = ({ id, title, array }) => {
   const { Counter, CurrencyIcon } = library;
+  const { burger, setBurger, setPrice } = React.useContext(Context);
 
-  const [count, setCount] = React.useState(0);
-  const click = () => setCount(count + 1);
+  const createBurger = (item) => {
+    if (item.type === "bun") {
+      setBurger({
+        ...(burger.bun !== {}
+          ? setPrice({ type: "delete", payload: burger.bun.price * 2 })
+          : burger.bun),
+      });
+      setBurger({
+        ...burger,
+        bun: item,
+      });
+      setPrice({ type: "add", payload: item.price * 2 });
+    } else {
+      setBurger({
+        ...burger,
+        others: [...burger.others, item],
+      });
+      setPrice({ type: "add", payload: item.price });
+    }
+  };
 
   const [ingredient, setIngredient] = React.useState({
-    data: {}, isToggle: false
+    data: {},
   });
 
+  const { modalState, open, close } = useModal();
+
   const showIngredient = (object) => {
-    setIngredient({ data: object, isToggle: true })
+    setIngredient({ data: object });
+    open();
   };
 
   const hideIngredient = () => {
-    setIngredient({ data: {}, isToggle: false });
+    setIngredient({ data: {} });
+    close();
   };
 
   return (
     <div className={Style.container}>
-      <h2 className={Style.title} id={id}>{title}</h2>
-      <ul className={Style.list} >
-        {
-          array.map((item, index) => {
-            return (
-              <li key={index} className={Style.item} onClick={() => { showIngredient(item) }}>
-                <div className={Style.wrapper}>
-                  <div className={Style.counter}>
-                    <Counter count={count} size="default" />
-                  </div>
-                  <img
-                    className={Style.image}
-                    src={item.image}
-                    alt={item.name}
-                  />
-                  <p className={Style.price}>
-                    {item.price}
-                    <CurrencyIcon type="primary" />
-                  </p>
-                  <p className={Style.name}>{item.name}</p>
-                </div>
-              </li>
-            );
-          })
-        }
+      <h2 className={Style.title} id={id}>
+        {title}
+      </h2>
+      <ul className={Style.list}>
+        {array.map((item, index) => {
+          return (
+            <li
+              key={index}
+              className={Style.item}
+              onClick={() => {
+                // createBurger(item);
+                showIngredient(item);
+              }}
+            >
+              <div className={Style.wrapper}>
+                {/* <div className={Style.counter}>
+                  <Counter count={0} size="default" />
+                </div> */}
+                <img className={Style.image} src={item.image} alt={item.name} />
+                <p className={Style.price}>
+                  {item.price}
+                  <CurrencyIcon type="primary" />
+                </p>
+                <p className={Style.name}>{item.name}</p>
+              </div>
+            </li>
+          );
+        })}
       </ul>
-      {ingredient.isToggle && <Modal closeModal={hideIngredient} forModal={<IngredientDetails data={ingredient.data} />} />}
+      {modalState ? (
+        <Modal closeModal={hideIngredient}>
+          <IngredientDetails data={ingredient.data} />
+        </Modal>
+      ) : (
+        modalState
+      )}
     </div>
   );
 };
 
 Ingredients.propTypes = {
-  id: PropTypes.string.isRequired ,
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  array: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
+  array: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 };
 
 export default Ingredients;

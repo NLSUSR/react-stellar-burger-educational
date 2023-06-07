@@ -1,20 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Style from "./anchor-menu.module.sass";
 
-const AnchorMenu = ({ tabs }) => {
-  const [current, setCurrent] = React.useState("Булки");
-
+const AnchorMenu = ({ tabs, current }) => {
   return (
     <ul className={Style.list}>
       {tabs.map((item, index) => (
-        <li key={index} className={Style.item}>
+        <li key={index} className={Style.name}>
           <Tab
-            active={current === item.value}
-            value={item.value}
-            onClick={setCurrent}
-            children={<a href={item.id} className={Style.id}>{item.name}</a>}
+            active={current === item.type}
+            value={item.type}
+            onClick={() => {
+              item.ref.current.scrollIntoView({
+                behavior: "smooth",
+              });
+            }}
+            children={<a className={Style.id}>{item.name}</a>}
           />
         </li>
       ))}
@@ -23,10 +24,12 @@ const AnchorMenu = ({ tabs }) => {
 };
 
 AnchorMenu.propTypes = {
-  tabs: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-  }).isRequired).isRequired
-}
+  tabs: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+  current: PropTypes.string.isRequired,
+};
 
 export default AnchorMenu;

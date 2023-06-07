@@ -5,72 +5,79 @@ import Recipe from "../util-components/recipe/recipe";
 import Invoice from "../util-components/invoice/invoice.jsx";
 import Modal from "../modal/modal.jsx";
 import OrderDetails from "../order-details/order-details.jsx";
-import Context from "../../services/contexts/app-context.js";
 import API from "../../utils/api.js";
-import useModal from "../../services/hooks/useModal.js";
-import done from "../../images/done.svg";
+import useModal from "../../services/hooks/use-modal.js";
+import { useDispatch, useSelector } from "react-redux";
+import rootActions from "../../services/actions/root-action";
+import { useDrop } from "react-dnd/dist/hooks";
 
 const BurgerConstructor = () => {
-  const { order, setOrder, burger, setBurger, price, setPrice } =
-    React.useContext(Context);
-
   const { modalState, open, close } = useModal();
+  const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    if (burger.bun.price !== 0 && burger.others.length !== 0) {
-      const array = burger.others.concat(burger.bun);
+  const burger = useSelector((s) => s.burger);
+  const order = useSelector((s) => s.order);
 
-      API.createOrder(array.map((i) => i._id))
-        .then((response) => {
-          setOrder({
-            name: response.name,
-            number: response.order.number,
-            success: response.success,
-          });
-        })
-        .catch((error) => {
-          API.responseError(error);
-        });
-    }
-  }, []);
+  const sendOrder = () => {
+    const array = burger.others.concat(burger.bun);
+    return burger.bun.price !== 0 && burger.others.length !== 0
+      ? API.createOrder(array.map((i) => i._id))
+          .then((response) => {
+            dispatch(rootActions.order.get(response));
+          })
+          .catch((e) => {
+            dispatch(rootActions.order.default());
+            API.responseError(e);
+          })
+      : null;
+  };
 
   const showOrder = () => {
+    sendOrder();
     open();
   };
 
+  function guid() {
+    const now = new Date();
+    return now.getTime().toString(36).slice(1, 36);
+  }
+
   const hideOrder = () => {
+    dispatch(rootActions.burger.default());
+    dispatch(rootActions.price.default());
+    dispatch(rootActions.order.default());
     close();
-
-    setPrice({ type: "reset" });
-
-    setOrder({
-      name: "",
-      number: 0,
-      success: false,
-    });
-
-    setBurger({
-      bun: {
-        image: done,
-        name: "Добавьте булку",
-        price: 0,
-      },
-      others: [],
-    });
   };
 
+  const [{}, drop] = useDrop({
+    accept: "create",
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+    drop({ item }) {
+      const ingredients = { ...item };
+      ingredients.key = guid();
+
+      item.type !== "bun"
+        ? dispatch(rootActions.burger.add(ingredients)) &&
+          dispatch(rootActions.price.add(ingredients.price))
+        : dispatch(rootActions.price.remove(burger.bun.price * 2)) &&
+          dispatch(rootActions.burger.replace(ingredients)) &&
+          dispatch(rootActions.price.add(ingredients.price * 2));
+    },
+  });
+
+  const scroll =
+    burger.others.length < 6 ? Style["hide-scroll"] : "custom-scroll";
+
   return (
-    <section className={Style.container}>
+    <section className={Style.container} ref={drop}>
       <ul className={Style.list}>
         <li className={Style.top}>
           <Buns bun={burger.bun} type={"top"} text={"верх"} lock={true} />
         </li>
 
-        <li
-          className={`${Style.ingredients} ${
-            burger.others.length < 6 ? Style["hide-scroll"] : "custom-scroll"
-          }`}
-        >
+        <li className={`${Style.ingredients} ${scroll}`}>
           <Recipe array={burger.others} />
         </li>
 
@@ -81,13 +88,13 @@ const BurgerConstructor = () => {
 
       <Invoice click={showOrder} />
 
-      {modalState ? (
-        <Modal closeModal={hideOrder}>
-          <OrderDetails>{order.number}</OrderDetails>
-        </Modal>
-      ) : (
-        modalState
-      )}
+      <React.Fragment>
+        {modalState && order.success ? (
+          <Modal closeModal={hideOrder}>
+            <OrderDetails>{order.number}</OrderDetails>
+          </Modal>
+        ) : null}
+      </React.Fragment>
     </section>
   );
 };

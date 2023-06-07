@@ -1,25 +1,25 @@
 import Style from "./ingredient-details.module.sass";
-import PropTypes from "prop-types"
-import {ingredientPropType} from "../../utils/prop-types.js";
+import PropTypes from "prop-types";
+import { ingredientPropType } from "../../utils/prop-types.js";
 
 const IngredientDetails = ({ data }) => {
   const values = [
     {
       nutrition: "Калории,ккал",
-      value: data.calories
+      value: data.calories,
     },
     {
       nutrition: "Белки, г",
-      value: data.proteins
+      value: data.proteins,
     },
     {
       nutrition: "Жиры, г",
-      value: data.fat
+      value: data.fat,
     },
     {
       nutrition: "Углеводы, г",
-      value: data.carbohydrates
-    }
+      value: data.carbohydrates,
+    },
   ];
 
   return (
@@ -28,21 +28,19 @@ const IngredientDetails = ({ data }) => {
       <img className={Style.image} src={data.image_large} alt={data.name} />
       <p className={Style.name}>{data.name}</p>
       <ul className={Style.list}>
-        {
-          values.map((item, index) =>
-            <li key={index} className={Style.item}>
-              <p className={Style.nutrition}>{item.nutrition}</p>
-              <p className={Style.value}>{item.value}</p>
-            </li>
-          )
-        }
+        {values.map((item, index) => (
+          <li key={index} className={Style.item}>
+            <p className={Style.nutrition}>{item.nutrition}</p>
+            <p className={Style.value}>{item.value}</p>
+          </li>
+        ))}
       </ul>
     </div>
-  )
-}
+  );
+};
 
 IngredientDetails.propTypes = {
-  data: PropTypes.shape(ingredientPropType.isRequired).isRequired
-}
+  data: PropTypes.shape(ingredientPropType.isRequired).isRequired,
+};
 
 export default IngredientDetails;

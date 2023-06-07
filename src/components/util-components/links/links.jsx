@@ -1,5 +1,5 @@
 import Style from "./links.module.sass";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 
 const Links = ({ state, link, title, image, text }) => {
   let colour;
@@ -20,7 +20,7 @@ Links.propTypes = {
   link: PropTypes.string.isRequired,
   title: PropTypes.string,
   image: PropTypes.element.isRequired,
-  text: PropTypes.string.isRequired
-}
+  text: PropTypes.string.isRequired,
+};
 
 export default Links;

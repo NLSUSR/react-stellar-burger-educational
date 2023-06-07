@@ -1,4 +1,4 @@
-import Style from "./buns.module.sass";
+// import Style from "./buns.module.sass";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../../utils/prop-types.js";
@@ -19,7 +19,7 @@ Buns.propTypes = {
   bun: PropTypes.shape(ingredientPropType.isRequired).isRequired,
   type: PropTypes.string.isRequired,
   lock: PropTypes.bool.isRequired,
-  text: PropTypes.string.isRequired
-}
+  text: PropTypes.string.isRequired,
+};
 
 export default Buns;

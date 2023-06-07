@@ -1,12 +1,12 @@
-import Context from "../../../services/contexts/app-context";
 import Style from "./invoice.module.sass";
 import * as library from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 const Invoice = ({ click }) => {
   const { CurrencyIcon, Button } = library;
-  const { price } = React.useContext(Context);
+  const price = useSelector((s) => s.price);
 
   return (
     <div className={Style.wrapper}>

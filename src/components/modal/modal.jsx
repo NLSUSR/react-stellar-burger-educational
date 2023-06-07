@@ -9,6 +9,9 @@ const Modal = ({ closeModal, children }) => {
   const handleEscapeClose = (event) =>
     event.key === "Escape" ? closeModal() : null;
 
+  const handleOverlayClose = (event) =>
+    event.target === event.currentTarget ? closeModal() : null;
+
   React.useEffect(() => {
     document.addEventListener("keydown", handleEscapeClose);
     return () => {
@@ -18,11 +21,7 @@ const Modal = ({ closeModal, children }) => {
 
   return ReactDOM.createPortal(
     <div className={Style.container}>
-      <ModalOverlay
-        overlayClose={(event) =>
-          event.target === event.currentTarget ? closeModal() : null
-        }
-      />
+      <ModalOverlay overlayClose={(event) => handleOverlayClose(event)} />
       <div className={Style.modal}>
         <div className={Style.close} onClick={closeModal}>
           <CloseIcon type="primary" />
@@ -35,8 +34,8 @@ const Modal = ({ closeModal, children }) => {
 };
 
 Modal.propTypes = {
-  children: PropTypes.element.isRequired,
   closeModal: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default Modal;

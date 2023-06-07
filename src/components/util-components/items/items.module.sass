@@ -1,0 +1,44 @@
+@import "../../../utils/constants.sass?fontIL=#{$fontIL}"
+@import "../../../utils/constants.sass?fontJBM=#{$fontJBM}"
+
+.item
+  width: 272px
+  height: 208px
+
+.wrapper
+  margin: 0 16px
+  padding: 0
+  display: flex
+  flex-direction: column
+  align-items: center
+  position: relative
+
+.counter
+  position: absolute
+  top: 0
+  right: -16px
+
+.image
+  width: 240px
+  height: 120px
+
+.price
+  margin: 8px 0 0 1px
+  padding: 0
+  width: fit-content
+  height: 24px
+  font-family: $fontIL
+  font-size: 28px
+  line-height: 24px
+  display: flex
+  align-items: center
+  gap: 8px
+
+.name
+  margin: 9px 0 0 3px
+  width: 272px
+  text-align: center
+  font-family: $fontJBM
+  font-size: 16px
+  line-height: 24px
+  color: #F2F2F3

@@ -1,6 +1,7 @@
 import Style from "./ingredient-details.module.sass";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types.js";
+import { v4 as uuidv4 } from "uuid";
 
 const IngredientDetails = ({ data }) => {
   const values = [
@@ -29,7 +30,7 @@ const IngredientDetails = ({ data }) => {
       <p className={Style.name}>{data.name}</p>
       <ul className={Style.list}>
         {values.map((item, index) => (
-          <li key={index} className={Style.item}>
+          <li key={uuidv4()} className={Style.item}>
             <p className={Style.nutrition}>{item.nutrition}</p>
             <p className={Style.value}>{item.value}</p>
           </li>

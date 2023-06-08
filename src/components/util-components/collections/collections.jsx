@@ -1,7 +1,8 @@
 import Style from "./collections.module.sass";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../../utils/prop-types.js";
-import Items from "../items/items.jsx";
+import Item from "../item/item.jsx";
+import { v4 as uuidv4 } from "uuid";
 
 const Collections = ({ title, array }) => {
   return (
@@ -9,7 +10,7 @@ const Collections = ({ title, array }) => {
       <h2 className={Style.title}>{title}</h2>
       <ul className={Style.list}>
         {array.map((item, index) => {
-          return <Items key={index} item={item} />;
+          return <Item key={uuidv4()} item={item} />;
         })}
       </ul>
     </div>

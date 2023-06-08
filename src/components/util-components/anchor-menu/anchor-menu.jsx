@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Style from "./anchor-menu.module.sass";
+import { v4 as uuidv4 } from "uuid";
 
 const AnchorMenu = ({ tabs, current }) => {
   return (
     <ul className={Style.list}>
       {tabs.map((item, index) => (
-        <li key={index} className={Style.name}>
+        <li key={uuidv4()} className={Style.name}>
           <Tab
             active={current === item.type}
             value={item.type}
@@ -15,8 +16,9 @@ const AnchorMenu = ({ tabs, current }) => {
                 behavior: "smooth",
               });
             }}
-            children={<a className={Style.id}>{item.name}</a>}
-          />
+          >
+            <p className={Style.text}>{item.name}</p>
+          </Tab>
         </li>
       ))}
     </ul>

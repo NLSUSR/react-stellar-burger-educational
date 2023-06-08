@@ -3,13 +3,13 @@ import React from "react";
 const useModal = () => {
   const [modal, setModal] = React.useState({ state: false });
 
-  const open = React.useCallback(() => {
+  const open = () => {
     setModal({ state: true });
-  }, []);
+  };
 
-  const close = React.useCallback(() => {
+  const close = () => {
     setModal({ state: false });
-  }, []);
+  };
 
   const modalState = modal.state;
 

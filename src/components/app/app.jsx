@@ -1,6 +1,8 @@
 import Style from "./app.module.sass";
 import React from "react";
 import AppHeader from "../app-header/app-header.jsx";
+import { DndProvider as DnD } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerConstructor from "../burger-constructor/burger-constructor.jsx";
 import BurgerIngrediens from "../burger-ingredients/burger-ingredients.jsx";
 import API from "../../utils/api.js";
@@ -20,16 +22,18 @@ const App = () => {
         dispatch(rootActions.data.failed(e));
         API.responseError(e);
       });
-  }, []);
+  }, [dispatch]);
 
   return (
-    <React.Fragment>
+    <>
       <AppHeader />
-      <main className={Style.main}>
-        <BurgerIngrediens />
-        <BurgerConstructor />
-      </main>
-    </React.Fragment>
+      <DnD backend={HTML5Backend}>
+        <main className={Style.main}>
+          <BurgerIngrediens />
+          <BurgerConstructor />
+        </main>
+      </DnD>
+    </>
   );
 };
 

@@ -4,6 +4,8 @@ import Collections from "../util-components/collections/collections.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import rootActions from "../../services/actions/root-action";
 import React from "react";
+import constants from "../../utils/constants.js";
+import { v4 as uuidv4 } from "uuid";
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
@@ -12,46 +14,47 @@ const BurgerIngredients = () => {
 
   React.useEffect(() => {
     dispatch(rootActions.ingredients.distribute(data.ingredients));
-  }, [data]);
+  }, [data, dispatch]);
 
-  const keys = {
-    names: { buns: "Булки", sauces: "Соусы", mains: "Начинки" },
-    id: { buns: "buns", sauces: "sauces", mains: "mains" },
+  const refs = {
+    parent: React.useRef(null),
+    bun: React.useRef(null),
+    sauce: React.useRef(null),
+    main: React.useRef(null),
   };
 
-  const bunRef = React.useRef(null);
-  const sauceRef = React.useRef(null);
-  const mainRef = React.useRef(null);
-  const parentRef = React.useRef(null);
-
-  const tabs = [
-    {
-      name: "Булки",
-      type: "bun",
-      ref: bunRef,
-    },
-    {
-      name: "Соусы",
-      type: "sauce",
-      ref: sauceRef,
-    },
-    {
-      name: "Начинки",
-      type: "main",
-      ref: mainRef,
-    },
-  ];
+  const tabs = React.useMemo(() => {
+    return [
+      {
+        name: "Булки",
+        type: "bun",
+        ref: refs.bun,
+      },
+      {
+        name: "Соусы",
+        type: "sauce",
+        ref: refs.sauce,
+      },
+      {
+        name: "Начинки",
+        type: "main",
+        ref: refs.main,
+      },
+    ];
+  }, [refs.bun, refs.sauce, refs.main]);
 
   const [current, setCurrent] = React.useState(tabs[0].type);
 
   const setCurrentOnScroll = () => {
     const closestTab = tabs.reduce((prev, curr) => {
       const prevDistance = Math.abs(
-        prev.ref.current.getBoundingClientRect().y - parentRef.current.offsetTop
+        prev.ref.current.getBoundingClientRect().y -
+          refs.parent.current.offsetTop
       );
 
       const currDistance = Math.abs(
-        curr.ref.current.getBoundingClientRect().y - parentRef.current.offsetTop
+        curr.ref.current.getBoundingClientRect().y -
+          refs.parent.current.offsetTop
       );
 
       return prevDistance < currDistance ? prev : curr;
@@ -65,29 +68,29 @@ const BurgerIngredients = () => {
       <AnchorMenu tabs={tabs} current={current} />
       <div
         className={`${Style.ingredients} custom-scroll`}
-        ref={parentRef}
+        ref={refs.parent}
         onScroll={setCurrentOnScroll}
       >
-        <div ref={bunRef}>
+        <div ref={refs.bun}>
           <Collections
-            key={keys.id.buns}
-            title={keys.names.buns}
+            key={uuidv4()}
+            title={constants.keys.names.buns}
             array={ingredients.buns}
           />
         </div>
 
-        <div ref={sauceRef}>
+        <div ref={refs.sauce}>
           <Collections
-            key={keys.id.sauces}
-            title={keys.names.sauces}
+            key={uuidv4()}
+            title={constants.keys.names.sauces}
             array={ingredients.sauces}
           />
         </div>
 
-        <div ref={mainRef}>
+        <div ref={refs.main}>
           <Collections
-            key={keys.id.mains}
-            title={keys.names.mains}
+            key={uuidv4()}
+            title={constants.keys.names.mains}
             array={ingredients.mains}
           />
         </div>

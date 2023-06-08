@@ -10,6 +10,7 @@ import useModal from "../../services/hooks/use-modal.js";
 import { useDispatch, useSelector } from "react-redux";
 import rootActions from "../../services/actions/root-action";
 import { useDrop } from "react-dnd/dist/hooks";
+import { v4 as uuidv4 } from "uuid";
 
 const BurgerConstructor = () => {
   const { modalState, open, close } = useModal();
@@ -17,11 +18,21 @@ const BurgerConstructor = () => {
 
   const burger = useSelector((s) => s.burger);
   const order = useSelector((s) => s.order);
+  const check = burger.bun.price !== 0;
+
+  const array = React.useMemo(() => {
+    return [burger.bun, ...burger.others, burger.bun];
+  }, [burger]);
+
+  const total = React.useMemo(() => {
+    const sort = array.map((i) => i.price);
+    return sort.reduce((previous, current) => current + previous);
+  }, [array]);
 
   const sendOrder = () => {
-    const array = burger.others.concat(burger.bun);
-    return burger.bun.price !== 0 && burger.others.length !== 0
-      ? API.createOrder(array.map((i) => i._id))
+    const ids = array.map((i) => i._id);
+    return check
+      ? API.createOrder(ids)
           .then((response) => {
             dispatch(rootActions.order.get(response));
           })
@@ -34,44 +45,45 @@ const BurgerConstructor = () => {
 
   const showOrder = () => {
     sendOrder();
-    open();
+    open()
   };
-
-  function guid() {
-    const now = new Date();
-    return now.getTime().toString(36).slice(1, 36);
-  }
 
   const hideOrder = () => {
     dispatch(rootActions.burger.default());
-    dispatch(rootActions.price.default());
     dispatch(rootActions.order.default());
-    close();
+    dispatch(rootActions.counter.default());
+    close()
   };
 
-  const [{}, drop] = useDrop({
+  const [, dropRef] = useDrop({
     accept: "create",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
     drop({ item }) {
-      const ingredients = { ...item };
-      ingredients.key = guid();
+      const element = { ...item };
+      element.key = uuidv4();
+      const unit = { _id: element._id, key: element.key };
 
       item.type !== "bun"
-        ? dispatch(rootActions.burger.add(ingredients)) &&
-          dispatch(rootActions.price.add(ingredients.price))
-        : dispatch(rootActions.price.remove(burger.bun.price * 2)) &&
-          dispatch(rootActions.burger.replace(ingredients)) &&
-          dispatch(rootActions.price.add(ingredients.price * 2));
+        ? dispatch(rootActions.burger.add(element)) &&
+          dispatch(rootActions.counter.increment(unit))
+        : dispatch(rootActions.burger.replace(element));
     },
   });
 
   const scroll =
     burger.others.length < 6 ? Style["hide-scroll"] : "custom-scroll";
 
+  
+  const wrapper = () => (
+    <Modal key={uuidv4()} close={hideOrder}>
+      <OrderDetails>{order.number}</OrderDetails>
+    </Modal>
+  );
+
   return (
-    <section className={Style.container} ref={drop}>
+    <section className={Style.container} ref={dropRef}>
       <ul className={Style.list}>
         <li className={Style.top}>
           <Buns bun={burger.bun} type={"top"} text={"верх"} lock={true} />
@@ -86,15 +98,9 @@ const BurgerConstructor = () => {
         </li>
       </ul>
 
-      <Invoice click={showOrder} />
+      {check ? <Invoice click={showOrder} price={total} /> : null}
 
-      <React.Fragment>
-        {modalState && order.success ? (
-          <Modal closeModal={hideOrder}>
-            <OrderDetails>{order.number}</OrderDetails>
-          </Modal>
-        ) : null}
-      </React.Fragment>
+      {modalState && total !== 0 ? wrapper() : null}
     </section>
   );
 };

@@ -5,6 +5,7 @@ import rootActions from "../../../services/actions/root-action";
 import { useDrag, useDrop } from "react-dnd";
 import React from "react";
 import PropTypes from "prop-types";
+import { ingredientPropType } from "../../../utils/prop-types";
 
 const Ingredients = ({ item, index }) => {
   const { DragIcon, ConstructorElement } = library;
@@ -12,20 +13,21 @@ const Ingredients = ({ item, index }) => {
 
   const remove = (item) => {
     dispatch(rootActions.burger.remove(item));
-    dispatch(rootActions.price.remove(item.price));
+    dispatch(rootActions.counter.decrement({ key: item.key }));
   };
 
   const others = useSelector((s) => s.burger.others);
-  const sort = [...others];
 
-  const [{}, drag] = useDrag({
+  const [, dragRef] = useDrag({
     type: "sort",
     item: { index },
   });
 
-  const [{ isHover }, drop] = useDrop({
+  const [{ isHover }, dropRef] = useDrop({
     accept: "sort",
     drop(item) {
+      const sort = [...others];
+
       const movable = sort.splice(item.index, 1)[0];
       sort.splice(index, 0, movable);
 
@@ -38,9 +40,9 @@ const Ingredients = ({ item, index }) => {
 
   const hover = isHover ? { opacity: ".1" } : { opacity: "1" };
 
-  const ref = React.useRef(null);
-
-  const dndRef = drag(drop(ref));
+  const dndRef = React.useRef(null);
+  dragRef(dndRef);
+  dropRef(dndRef);
 
   return (
     <li ref={dndRef} className={Style.item} style={hover}>
@@ -61,7 +63,7 @@ const Ingredients = ({ item, index }) => {
 };
 
 Ingredients.propTypes = {
-  item: PropTypes.shape(PropTypes.string.isRequired).isRequired,
+  item: PropTypes.shape(ingredientPropType.isRequired).isRequired,
   index: PropTypes.number.isRequired,
 };
 

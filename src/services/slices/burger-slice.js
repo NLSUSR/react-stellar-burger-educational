@@ -5,11 +5,12 @@ const burgerSlice = createSlice({
   name: "burger",
   initialState: {
     bun: {
+      _id: 0,
       image: done,
       name: "Добавьте булку",
       price: 0,
     },
-    others: [],
+    others: []
   },
   reducers: {
     add: (state, action) => {

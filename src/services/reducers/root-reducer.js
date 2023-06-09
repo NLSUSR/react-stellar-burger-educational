@@ -4,7 +4,6 @@ import { counterReducer } from "../slices/counter-slice";
 import { dataReducer } from "../slices/data-slice";
 import { ingredientsReducer } from "../slices/ingredient-slice";
 import { orderReducer } from "../slices/order-slice";
-import { priceReducer } from "../slices/price-slice";
 
 const rootReducer = combineReducers({
   burger: burgerReducer,
@@ -12,7 +11,6 @@ const rootReducer = combineReducers({
   data: dataReducer,
   ingredients: ingredientsReducer,
   order: orderReducer,
-  price: priceReducer,
 });
 
 export default rootReducer;

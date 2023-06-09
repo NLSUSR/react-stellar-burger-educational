@@ -6,11 +6,9 @@ import { createPortal } from "react-dom";
 import React from "react";
 
 const Modal = ({ close, children }) => {
-  const handleEscapeClose = (e) => (e.key === "Escape" ? close() : null);
+  const handleButtonClose = () => close();
 
-  const handleButtonClose = () => {
-    close();
-  };
+  const handleEscapeClose = (e) => (e.key === "Escape" ? close() : null);
 
   const handleOverlayClose = (e) =>
     e.target === e.currentTarget ? close() : null;
@@ -25,7 +23,7 @@ const Modal = ({ close, children }) => {
 
   return createPortal(
     <div className={Style.container}>
-      <ModalOverlay overlayClose={(e) => handleOverlayClose(e)} />
+      <ModalOverlay close={(e) => handleOverlayClose(e)} />
       <div className={Style.modal}>
         <div className={Style.close} onClick={handleButtonClose}>
           <CloseIcon type="primary" />

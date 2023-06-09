@@ -6,14 +6,12 @@ import Invoice from "../util-components/invoice/invoice.jsx";
 import Modal from "../modal/modal.jsx";
 import OrderDetails from "../order-details/order-details.jsx";
 import API from "../../utils/api.js";
-import useModal from "../../services/hooks/use-modal.js";
 import { useDispatch, useSelector } from "react-redux";
 import rootActions from "../../services/actions/root-action";
 import { useDrop } from "react-dnd/dist/hooks";
 import { v4 as uuidv4 } from "uuid";
 
 const BurgerConstructor = () => {
-  const { modalState, open, close } = useModal();
   const dispatch = useDispatch();
 
   const burger = useSelector((s) => s.burger);
@@ -43,16 +41,18 @@ const BurgerConstructor = () => {
       : null;
   };
 
+  const [modalState, setModalState] = React.useState(false);
+
   const showOrder = () => {
     sendOrder();
-    open()
+    setModalState(true);
   };
 
   const hideOrder = () => {
     dispatch(rootActions.burger.default());
     dispatch(rootActions.order.default());
     dispatch(rootActions.counter.default());
-    close()
+    setModalState(false);
   };
 
   const [, dropRef] = useDrop({
@@ -75,8 +75,7 @@ const BurgerConstructor = () => {
   const scroll =
     burger.others.length < 6 ? Style["hide-scroll"] : "custom-scroll";
 
-  
-  const wrapper = () => (
+  const Popup = () => (
     <Modal key={uuidv4()} close={hideOrder}>
       <OrderDetails>{order.number}</OrderDetails>
     </Modal>
@@ -100,7 +99,7 @@ const BurgerConstructor = () => {
 
       {check ? <Invoice click={showOrder} price={total} /> : null}
 
-      {modalState && total !== 0 ? wrapper() : null}
+      {modalState && order.success ? Popup() : null}
     </section>
   );
 };

@@ -1,12 +1,17 @@
 import Style from "./modal-overlay.module.sass";
 import PropTypes from "prop-types";
+import { Fragment } from "react";
 
-const ModalOverlay = ({ overlayClose }) => {
-  return <div className={Style.overlay} onClick={overlayClose} />;
+const ModalOverlay = ({ close }) => {
+  return (
+    <Fragment>
+      <div className={Style.overlay} onClick={close} />
+    </Fragment>
+  );
 };
 
 ModalOverlay.propTypes = {
-  overlayClose: PropTypes.func.isRequired,
+  сlose: PropTypes.func.isRequired,
 };
 
 export default ModalOverlay;

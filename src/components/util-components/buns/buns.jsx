@@ -1,7 +1,7 @@
 // import Style from "./buns.module.sass";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { ingredientPropType } from "../../../utils/prop-types.js";
+import constants from "../../../utils/constants.js";
 
 const Buns = ({ bun, type, lock, text }) => {
   return (
@@ -16,7 +16,7 @@ const Buns = ({ bun, type, lock, text }) => {
 };
 
 Buns.propTypes = {
-  bun: PropTypes.shape(ingredientPropType.isRequired).isRequired,
+  bun: PropTypes.shape(constants.types.isRequired).isRequired,
   type: PropTypes.string.isRequired,
   lock: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired,

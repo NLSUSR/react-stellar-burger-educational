@@ -5,7 +5,7 @@ import rootActions from "../../../services/actions/root-action";
 import { useDrag, useDrop } from "react-dnd";
 import React from "react";
 import PropTypes from "prop-types";
-import { ingredientPropType } from "../../../utils/prop-types";
+import constants from "../../../utils/constants.js";
 
 const Ingredients = ({ item, index }) => {
   const { DragIcon, ConstructorElement } = library;
@@ -63,7 +63,7 @@ const Ingredients = ({ item, index }) => {
 };
 
 Ingredients.propTypes = {
-  item: PropTypes.shape(ingredientPropType.isRequired).isRequired,
+  item: PropTypes.shape(constants.types.isRequired).isRequired,
   index: PropTypes.number.isRequired,
 };
 

@@ -1,6 +1,6 @@
 import Style from "./ingredient-details.module.sass";
 import PropTypes from "prop-types";
-import { ingredientPropType } from "../../utils/prop-types.js";
+import constants from "../../utils/constants.js";
 import { v4 as uuidv4 } from "uuid";
 
 const IngredientDetails = ({ data }) => {
@@ -29,7 +29,7 @@ const IngredientDetails = ({ data }) => {
       <img className={Style.image} src={data.image_large} alt={data.name} />
       <p className={Style.name}>{data.name}</p>
       <ul className={Style.list}>
-        {values.map((item, index) => (
+        {values.map((item) => (
           <li key={uuidv4()} className={Style.item}>
             <p className={Style.nutrition}>{item.nutrition}</p>
             <p className={Style.value}>{item.value}</p>
@@ -41,7 +41,7 @@ const IngredientDetails = ({ data }) => {
 };
 
 IngredientDetails.propTypes = {
-  data: PropTypes.shape(ingredientPropType.isRequired).isRequired,
+  data: PropTypes.shape(constants.types.isRequired).isRequired,
 };
 
 export default IngredientDetails;

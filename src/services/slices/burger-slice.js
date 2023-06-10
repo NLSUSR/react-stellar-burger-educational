@@ -10,7 +10,7 @@ const burgerSlice = createSlice({
       name: "Добавьте булку",
       price: 0,
     },
-    others: []
+    others: [],
   },
   reducers: {
     add: (state, action) => {

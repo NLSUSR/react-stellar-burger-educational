@@ -6,10 +6,8 @@ import { createPortal } from "react-dom";
 import React from "react";
 
 const Modal = ({ close, children }) => {
-  const handleButtonClose = () => close();
-
+  const handleButtonClose = (e) => (e.target ? close() : null);
   const handleEscapeClose = (e) => (e.key === "Escape" ? close() : null);
-
   const handleOverlayClose = (e) =>
     e.target === e.currentTarget ? close() : null;
 
@@ -18,14 +16,13 @@ const Modal = ({ close, children }) => {
     return () => {
       document.removeEventListener("keydown", handleEscapeClose);
     };
-    // eslint-disable-next-line
   }, []);
 
   return createPortal(
     <div className={Style.container}>
       <ModalOverlay close={(e) => handleOverlayClose(e)} />
       <div className={Style.modal}>
-        <div className={Style.close} onClick={handleButtonClose}>
+        <div className={Style.close} onClick={(e) => handleButtonClose(e)}>
           <CloseIcon type="primary" />
         </div>
         {children}

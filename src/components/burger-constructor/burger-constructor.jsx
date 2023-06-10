@@ -1,4 +1,5 @@
 import Style from "./burger-constructor.module.sass";
+import { useDispatch, useSelector } from "react-redux";
 import React from "react";
 import Buns from "../util-components/buns/buns.jsx";
 import Recipe from "../util-components/recipe/recipe";
@@ -6,10 +7,10 @@ import Invoice from "../util-components/invoice/invoice.jsx";
 import Modal from "../modal/modal.jsx";
 import OrderDetails from "../order-details/order-details.jsx";
 import API from "../../utils/api.js";
-import { useDispatch, useSelector } from "react-redux";
-import rootActions from "../../services/actions/root-action";
+import rootActions from "../../services/actions/root-action.js";
 import { useDrop } from "react-dnd/dist/hooks";
 import { v4 as uuidv4 } from "uuid";
+import useModal from "../../utils/useModal.js";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const BurgerConstructor = () => {
 
   const total = React.useMemo(() => {
     const sort = array.map((i) => i.price);
-    return sort.reduce((previous, current) => current + previous);
+    return sort.reduce((previous, current) => previous + current);
   }, [array]);
 
   const sendOrder = () => {
@@ -41,18 +42,18 @@ const BurgerConstructor = () => {
       : null;
   };
 
-  const [modalState, setModalState] = React.useState(false);
+  const { modalState, open, close } = useModal();
 
   const showOrder = () => {
     sendOrder();
-    setModalState(true);
+    open();
   };
 
   const hideOrder = () => {
     dispatch(rootActions.burger.default());
     dispatch(rootActions.order.default());
     dispatch(rootActions.counter.default());
-    setModalState(false);
+    close();
   };
 
   const [, dropRef] = useDrop({

@@ -1,7 +1,7 @@
 import Style from "./recipe.module.sass";
 import PropTypes from "prop-types";
-import { ingredientPropType } from "../../../utils/prop-types.js";
-import Ingredients from "../ingredients/ingredients";
+import constants from "../../../utils/constants.js";
+import Ingredients from "../ingredients/ingredients.jsx";
 import { v4 as uuidv4 } from "uuid";
 
 const Recipe = ({ array }) => {
@@ -17,7 +17,7 @@ const Recipe = ({ array }) => {
 };
 
 Recipe.propTypes = {
-  array: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+  array: PropTypes.arrayOf(constants.types.isRequired).isRequired,
 };
 
 export default Recipe;

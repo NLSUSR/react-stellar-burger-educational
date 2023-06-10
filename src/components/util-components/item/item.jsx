@@ -7,7 +7,8 @@ import Modal from "../../modal/modal.jsx";
 import IngredientDetails from "../../ingredient-details/ingredient-details";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
-import { ingredientPropType } from "../../../utils/prop-types.js";
+import constants from "../../../utils/constants.js";
+import useModal from "../../../utils/useModal.js";
 
 const Item = ({ item }) => {
   const { Counter, CurrencyIcon } = library;
@@ -21,14 +22,14 @@ const Item = ({ item }) => {
     ).length;
   }, [count, bun, item]);
 
-  const [modalState, setModalState] = React.useState(false);
+  const { modalState, open, close } = useModal();
 
   const showUnit = () => {
-    setModalState(true);
+    open();
   };
 
   const hideUnit = () => {
-    setModalState(false);
+    close();
   };
 
   const [{ isDrag }, dragRef] = useDrag({
@@ -48,8 +49,8 @@ const Item = ({ item }) => {
   );
 
   return (
-    <li ref={dragRef} style={opacity} className={Style.item} onClick={showUnit}>
-      <div className={Style.wrapper}>
+    <li ref={dragRef} style={opacity} className={Style.item}>
+      <div className={Style.wrapper} onClick={showUnit}>
         <div className={Style.counter}>
           {counter !== 0 ? <Counter count={counter} size="default" /> : null}
         </div>
@@ -67,7 +68,7 @@ const Item = ({ item }) => {
 };
 
 Item.propTypes = {
-  item: PropTypes.shape(ingredientPropType.isRequired).isRequired,
+  item: PropTypes.shape(constants.types.isRequired).isRequired,
 };
 
 export default Item;

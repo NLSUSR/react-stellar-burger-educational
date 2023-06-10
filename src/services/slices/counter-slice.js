@@ -7,7 +7,7 @@ const counterSlice = createSlice({
   },
   reducers: {
     increment: (state, action) => {
-      state.count.push(action.payload)
+      state.count.push(action.payload);
     },
     decrement: (state, action) => {
       state.count = state.count.filter((i) => i.key !== action.payload.key);

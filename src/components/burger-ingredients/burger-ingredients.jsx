@@ -46,55 +46,64 @@ const BurgerIngredients = () => {
   const [current, setCurrent] = React.useState(tabs[0].type);
 
   const setCurrentOnScroll = () => {
-    const closestTab = tabs.reduce((prev, curr) => {
-      const prevDistance = Math.abs(
-        prev.ref.current.getBoundingClientRect().y -
+    const closestTab = tabs.reduce((previous, current) => {
+      const previousDistance = Math.abs(
+        previous.ref.current.getBoundingClientRect().y -
           refs.parent.current.offsetTop
       );
 
-      const currDistance = Math.abs(
-        curr.ref.current.getBoundingClientRect().y -
+      const currentDistance = Math.abs(
+        current.ref.current.getBoundingClientRect().y -
           refs.parent.current.offsetTop
       );
 
-      return prevDistance < currDistance ? prev : curr;
+      return previousDistance < currentDistance ? previous : current;
     });
     setCurrent(closestTab.type);
   };
+
+  const array = [
+    {
+      ref: refs.bun,
+      key: uuidv4(),
+      title: constants.keys.names.buns,
+      array: ingredients.buns,
+    },
+    {
+      ref: refs.sauce,
+      key: uuidv4(),
+      title: constants.keys.names.sauces,
+      array: ingredients.sauces,
+    },
+    {
+      ref: refs.main,
+      key: uuidv4(),
+      title: constants.keys.names.mains,
+      array: ingredients.mains,
+    },
+  ];
 
   return (
     <section className={Style.container}>
       <h1 className={Style.title}>{"Соберите бургер"}</h1>
       <AnchorMenu tabs={tabs} current={current} />
-      <div
+      <ul
         className={`${Style.ingredients} custom-scroll`}
         ref={refs.parent}
         onScroll={setCurrentOnScroll}
       >
-        <div ref={refs.bun}>
-          <Collections
-            key={uuidv4()}
-            title={constants.keys.names.buns}
-            array={ingredients.buns}
-          />
-        </div>
-
-        <div ref={refs.sauce}>
-          <Collections
-            key={uuidv4()}
-            title={constants.keys.names.sauces}
-            array={ingredients.sauces}
-          />
-        </div>
-
-        <div ref={refs.main}>
-          <Collections
-            key={uuidv4()}
-            title={constants.keys.names.mains}
-            array={ingredients.mains}
-          />
-        </div>
-      </div>
+        {array.map((item) => {
+          return (
+            <li key={uuidv4()} ref={item.ref}>
+              <Collections
+                key={item.key}
+                title={item.title}
+                array={item.array}
+              />
+            </li>
+          );
+        })}
+      </ul>
     </section>
   );
 };

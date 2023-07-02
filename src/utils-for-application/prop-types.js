@@ -119,13 +119,13 @@ export const form = {
     placeholder: PropTypes.string,
     state: PropTypes.string,
     type: PropTypes.string,
-  }).isRequired,
+  }),
   name: PropTypes.shape({
     icon: PropTypes.bool,
     placeholder: PropTypes.string,
     state: PropTypes.string,
     type: PropTypes.string,
-  }).isRequired,
+  }),
   password: PropTypes.shape({
     icon: PropTypes.bool,
     placeholder: PropTypes.string,

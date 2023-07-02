@@ -1,0 +1,49 @@
+@import "../../utils-for-application/constants.sass?_=#{$_}"
+
+$jbm: $fontJBM
+$il: $fontIL
+$ts: $textShadow
+$w: fit-content
+$h: fit-content
+
+.container
+  display: flex
+  flex-direction: column
+  align-items: center
+
+.content
+  margin-top: 180px
+  display: flex
+  flex-direction: column
+  gap: 16px
+  align-items: center
+
+.number
+  width: $w
+  height: $h
+  font-family: $il
+  font-size: 20rem
+  line-height: 12rem
+  text-shadow: $ts
+  user-select: none
+
+.string
+  text-align: center
+  height: $h
+  font-family: $jbm
+  font-size: 5rem
+  user-select: none
+
+.link
+  background: white
+  border: 0
+  width: $w
+  height: $h
+  padding: 5px 45px
+  border-radius: 16px
+  font-family: $jbm
+  font-size: 2rem
+  cursor: pointer
+  filter: drop-shadow(0px 24px 32px red)
+  &:hover
+    filter: drop-shadow(0px 24px 32px green)

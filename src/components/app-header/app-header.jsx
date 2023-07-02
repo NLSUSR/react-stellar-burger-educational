@@ -1,55 +1,61 @@
-import * as library from "@ya.praktikum/react-developer-burger-ui-components";
 import Style from "./app-header.module.sass";
-import Links from "../util-components/links/links.jsx";
-import { v4 as uuidv4 } from "uuid";
+import HeaderLinks from "../utils-for-components/header-links/header-links";
+import rootActions from "../../services/store/actions/root-action";
+import constants from "../../utils-for-application/constants";
+
+import React from "react";
+import { v4 } from "uuid";
+import { useDispatch, useSelector } from "react-redux";
+import * as RSB from "@ya.praktikum/react-developer-burger-ui-components";
 
 const AppHeader = () => {
-  const { Logo, BurgerIcon, ListIcon, ProfileIcon } = library;
+  const link = useSelector((s) => s.link);
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(rootActions.link.default());
+  }, [dispatch]);
 
   const array = [
     {
-      class: `${Style["navigation-item"]} pl-5 pt-4 pr-5 pb-4`,
-      image: <BurgerIcon type="primary" />,
+      class: Style.constructor,
+      image: <RSB.BurgerIcon type={link?.constructor.type ?? "secondary"} />,
       text: "Конструктор",
-      link: "#",
-      state: "active",
+      link: "/",
+      state: link?.constructor.state ?? "inactive",
     },
     {
-      class: `${Style["navigation-item"]} pl-5 pt-4 pr-5 pb-4`,
-      image: <ListIcon type="secondary" />,
+      class: Style.order_feed,
+      image: <RSB.ListIcon type={link?.feed.type ?? "secondary"} />,
       text: "Лента заказов",
-      link: "#",
-      state: "inactive",
+      link: "/feed",
+      state: link?.feed.state ?? "inactive",
     },
     {
-      class: Style.logo,
-      image: <Logo />,
+      class: Style.logotype,
+      image: <RSB.Logo />,
       text: "",
-      link: "#",
+      link: "/",
       state: "",
     },
     {
-      class: `${Style["navigation-item"]} pl-5 pt-4 pr-5 pb-4`,
-      image: <ProfileIcon type="secondary" />,
+      class: Style.personal_area,
+      image: <RSB.ProfileIcon type={link?.profile.type ?? "secondary"} />,
       text: "Личный кабинет",
-      link: "#",
-      state: "inactive",
+      link: "/profile",
+      state: link?.profile.state ?? "inactive",
     },
   ];
 
   return (
     <header className={Style.header}>
       <nav className={Style.navigation}>
-        <ul className={Style["navigation-list"]}>
-          {array.map((item) => {
+        <ul className={Style.list}>
+          {array?.map((item) => {
             return (
-              <li key={uuidv4()} className={item.class}>
-                <Links
-                  image={item.image}
-                  text={item.text}
-                  link={item.link}
-                  state={item.state}
-                />
+              <li key={v4()}>
+                <HeaderLinks element={item} />
               </li>
             );
           })}
@@ -58,5 +64,7 @@ const AppHeader = () => {
     </header>
   );
 };
+
+AppHeader.propTypes = constants.types.appHeader;
 
 export default AppHeader;

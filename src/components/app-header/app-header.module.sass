@@ -1,31 +1,55 @@
-@import "../../utils/constants.sass?fontJBM=#{$fontJBM}"
-@import "../../utils/constants.sass?shadow=#{$shadowAppHeader}"
+@import "../../utils-for-application/constants.sass?_=#{$_}"
+
+$s: $shadow
+$bc: $borderColor
 
 .header
   width: 100%
-  box-shadow: $shadowAppHeader
+  box-shadow: $s
 
 .navigation
   margin: 0 auto
   width: 1280px
   height: 88px
   display: flex
+
+.list
+  display: flex
   align-items: center
 
-.navigation-list
-  width: 1280px
-  list-style: none
-  display: flex
-  justify-content: space-between
-
-.navigation-item
-  &:nth-child(2)
-    margin-left: -192px
-
-.logo
-  transform: translateX(-84px)
+.links
   display: flex
   align-items: center
   justify-content: center
-  padding: 0
-  width: 290px
+
+.constructor
+  composes: links
+  max-width: 178px
+  margin-right: 8px
+  padding: 16px 20px
+  &:hover
+    border-radius: 12px
+    outline: 2px solid $bc
+
+.order_feed
+  composes: links
+  max-width: 197px
+  margin-right: 117px
+  padding: 16px 20px
+  &:hover
+    border-radius: 12px
+    outline: 2px solid $bc
+
+.logotype
+  composes: links
+  max-width: 290px
+  margin-right: 284px
+
+.personal_area
+  composes: links
+  max-width: 207px
+  margin-right: 0
+  padding: 16px 20px
+  &:hover
+    border-radius: 12px
+    outline: 2px solid $bc

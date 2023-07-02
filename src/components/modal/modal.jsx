@@ -1,9 +1,10 @@
 import Style from "./modal.module.sass";
-import ModalOverlay from "../modal-overlay/modal-overlay.jsx";
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import { createPortal } from "react-dom";
+import ModalOverlay from "../modal-overlay/modal-overlay";
+import constants from "../../utils-for-application/constants";
+
 import React from "react";
+import { createPortal } from "react-dom";
+import * as RSB from "@ya.praktikum/react-developer-burger-ui-components";
 
 const Modal = ({ close, children }) => {
   const handleButtonClose = (e) => (e.target ? close() : null);
@@ -16,25 +17,23 @@ const Modal = ({ close, children }) => {
     return () => {
       document.removeEventListener("keydown", handleEscapeClose);
     };
+    // eslint-disable-next-line
   }, []);
 
   return createPortal(
-    <div className={Style.container}>
+    <section className={Style.container}>
       <ModalOverlay close={(e) => handleOverlayClose(e)} />
       <div className={Style.modal}>
         <div className={Style.close} onClick={(e) => handleButtonClose(e)}>
-          <CloseIcon type="primary" />
+          <RSB.CloseIcon type="primary" />
         </div>
         {children}
       </div>
-    </div>,
+    </section>,
     document.querySelector("#modal")
   );
 };
 
-Modal.propTypes = {
-  close: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
-};
+Modal.propTypes = constants.types.modal;
 
 export default Modal;

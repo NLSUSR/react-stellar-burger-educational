@@ -1,24 +1,24 @@
-import "./index.css";
-import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./services/reducers/root-reducer.js";
-import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
 import { Provider } from "react-redux";
-import App from "./components/app/app.jsx";
-import reportWebVitals from "./reportWebVitals.ts";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import { configureStore } from "@reduxjs/toolkit";
+
+import reportWebVitals from "./utils-from-react/reportWebVitals";
+import rootReducer from "./services/store/reducers/root-reducer";
+import Application from "./components/application/application";
 
 const configure = configureStore({
   reducer: rootReducer,
   devTools: true,
 });
 
-const rootSelector = document.querySelector("#root");
-const root = createRoot(rootSelector);
-
-root.render(
+createRoot(document.querySelector("#root")).render(
   <StrictMode>
     <Provider store={configure}>
-      <App />
+      <BrowserRouter>
+        <Application />
+      </BrowserRouter>
     </Provider>
   </StrictMode>
 );

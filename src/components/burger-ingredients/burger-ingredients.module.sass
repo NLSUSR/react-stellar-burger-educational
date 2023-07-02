@@ -1,4 +1,6 @@
-@import "../../utils/constants.sass?fontJBM=#{$fontJBM}"
+@import "../../utils-for-application/constants.sass?_=#{$_}"
+
+$jbm: $fontJBM
 
 .container
   margin-top: 40px
@@ -6,12 +8,13 @@
 
 .title
   margin: 0 0 20px 0
-  font-family: $fontJBM
+  font-family: $jbm
   font-weight: 700
   font-size: 36px
   line-height: 40px
 
-.ingredients
+.list
   width: 600px
-  height: 664px
+  max-height: calc(100vh - 300px)
   overflow-y: scroll
+  overflow-x: hidden

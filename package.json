@@ -21,6 +21,7 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.7",
+    "react-router-dom": "^6.12.1",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
@@ -31,11 +32,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "npm install": "npm i",
     "build": "react-scripts build",
-    "deploy": "npm run build && gh-pages -d build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && gh-pages -d build",
+    "force install": "npm i --force"
   },
   "eslintConfig": {
     "extends": [

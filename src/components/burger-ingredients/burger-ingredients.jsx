@@ -1,19 +1,20 @@
 import Style from "./burger-ingredients.module.sass";
-import AnchorMenu from "../util-components/anchor-menu/anchor-menu.jsx";
-import Collections from "../util-components/collections/collections.jsx";
-import { useDispatch, useSelector } from "react-redux";
-import rootActions from "../../services/actions/root-action";
+import rootActions from "../../services/store/actions/root-action";
+import constants from "../../utils-for-application/constants";
+import BurgerIngredientsMenu from "../utils-for-components/burger-ingredients-menu/burger-ingredients-menu";
+import BurgerIngredientsCollections from "../utils-for-components/burger-ingredients-collections/burger-ingredients-collections";
+
 import React from "react";
-import constants from "../../utils/constants.js";
-import { v4 as uuidv4 } from "uuid";
+import { v4 } from "uuid";
+import { useDispatch, useSelector } from "react-redux";
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
-  const data = useSelector((s) => s.data);
+  const data = useSelector((s) => s.data.getData.response?.data);
   const ingredients = useSelector((s) => s.ingredients);
 
   React.useEffect(() => {
-    dispatch(rootActions.ingredients.distribute(data.ingredients));
+    dispatch(rootActions.ingredients.distribute(data));
   }, [data, dispatch]);
 
   const refs = {
@@ -65,37 +66,37 @@ const BurgerIngredients = () => {
   const array = [
     {
       ref: refs.bun,
-      key: uuidv4(),
+      key: v4(),
       title: constants.keys.names.buns,
-      array: ingredients.buns,
+      array: ingredients?.buns ?? [],
     },
     {
       ref: refs.sauce,
-      key: uuidv4(),
+      key: v4(),
       title: constants.keys.names.sauces,
-      array: ingredients.sauces,
+      array: ingredients?.sauces ?? [],
     },
     {
       ref: refs.main,
-      key: uuidv4(),
+      key: v4(),
       title: constants.keys.names.mains,
-      array: ingredients.mains,
+      array: ingredients?.mains ?? [],
     },
   ];
 
   return (
     <section className={Style.container}>
       <h1 className={Style.title}>{"Соберите бургер"}</h1>
-      <AnchorMenu tabs={tabs} current={current} />
+      <BurgerIngredientsMenu tabs={tabs} current={current} />
       <ul
-        className={`${Style.ingredients} custom-scroll`}
+        className={`${Style.list} custom-scroll`}
         ref={refs.parent}
         onScroll={setCurrentOnScroll}
       >
-        {array.map((item) => {
+        {array?.map((item) => {
           return (
-            <li key={uuidv4()} ref={item.ref}>
-              <Collections
+            <li key={v4()} ref={item.ref}>
+              <BurgerIngredientsCollections
                 key={item.key}
                 title={item.title}
                 array={item.array}

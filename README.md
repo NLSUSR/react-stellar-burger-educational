@@ -14,3 +14,5 @@
 
 1. [7 Спринт](https://code.s3.yandex.net/web-plus/checklists/checklist_pdf/checklist_7.pdf)
 2. [8 Спринт](https://code.s3.yandex.net/web-plus/checklists/checklist_pdf/checklist_8.pdf)
+3. [9 Спринт 1 Этап](https://code.s3.yandex.net/web-plus/checklists/checklist_pdf/checklist_9-1.pdf)
+4. [9 Спринт 2 Этап](https://code.s3.yandex.net/web-plus/checklists/checklist_pdf/checklist_9-2.pdf)

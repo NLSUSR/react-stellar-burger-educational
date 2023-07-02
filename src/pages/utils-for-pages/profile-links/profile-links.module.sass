@@ -1,0 +1,37 @@
+@import "../../../utils-for-application/constants.sass?_=#{$_}"
+
+$jbm: $fontJBM
+$ic: $inactiveColor
+$ac: $activeColor
+
+.list
+
+.item
+  display: flex
+  width: 320px
+  height: 64px
+
+.info
+  margin-top: 80px
+  width: 321px
+  font-family: $jbm
+  line-height: 24px
+  color: $ic
+  opacity: 0.4
+
+.link
+  text-decoration: none
+  font-family: $jbm
+  font-weight: 700
+  font-size: 24px
+  line-height: 30px
+  display: flex
+  align-items: center
+  color: $ic
+  &:hover
+    scale: 1.05
+    transition: scale .3 ease
+
+.active
+  composes: link
+  color: $ac

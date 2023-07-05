@@ -6,12 +6,10 @@ import rootDispatcher from "../../services/store/dispatchers/root-dispacher";
 import constants from "../../utils-for-application/constants";
 
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Profile = () => {
   const dispatch = useDispatch();
-
-  const user = useSelector((s) => s.user.response?.user ?? "");
 
   const callback = (e, value) => {
     e.preventDefault();
@@ -23,8 +21,8 @@ const Profile = () => {
     setDisabler("disabled");
     setValue({
       code: "",
-      email: user?.email ?? "",
-      name: user?.name ?? "",
+      email: "",
+      name: "",
       password: "",
     });
   };

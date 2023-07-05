@@ -8,7 +8,7 @@ import * as RSB from "@ya.praktikum/react-developer-burger-ui-components";
 const BurgerConstructorInvoice = ({ click, price, button }) => {
   const navigate = useNavigate();
 
-  const success = useSelector((s) => s.user.getUser.response?.success ?? false);
+  const success = useSelector((s) => s.user.response?.success ?? false);
 
   const login = () => {
     navigate("/login", { replace: true });

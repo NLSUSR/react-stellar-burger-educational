@@ -21,9 +21,7 @@ const set = (name, value, props) => {
     exp = props.expires = d;
   }
 
-  if (exp && exp.toUTCString) {
-    props.expires = exp.toUTCString();
-  }
+  props.expires = exp && exp.toUTCString ? exp.toUTCString() : props.expires;
 
   value = encodeURIComponent(value);
 
@@ -32,9 +30,7 @@ const set = (name, value, props) => {
   for (const propName in props) {
     updatedCookie += "; " + propName;
     const propValue = props[propName];
-    if (propValue !== true) {
-      updatedCookie += "=" + propValue;
-    }
+    updatedCookie += propValue !== true ? "=" + propValue : "";
   }
 
   document.cookie = updatedCookie;

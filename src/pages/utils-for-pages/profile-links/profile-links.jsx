@@ -2,7 +2,6 @@ import Style from "./profile-links.module.sass";
 import constants from "../../../utils-for-application/constants";
 
 import React from "react";
-import { v4 } from "uuid";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -30,9 +29,9 @@ const ProfileLinks = ({ message }) => {
 
   return (
     <ul className={Style.list}>
-      {links?.map((item) => {
+      {links?.map((item, index) => {
         return (
-          <li className={Style.item} key={v4()}>
+          <li key={`profile_links_${index}`} className={Style.item} >
             <a
               className={Style[`${item.page}`] ?? Style.link}
               href={item.link}

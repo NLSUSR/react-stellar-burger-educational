@@ -4,7 +4,6 @@ import rootActions from "../../services/store/actions/root-action";
 import constants from "../../utils-for-application/constants";
 
 import React from "react";
-import { v4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import * as RSB from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -15,7 +14,7 @@ const AppHeader = () => {
 
   React.useEffect(() => {
     dispatch(rootActions.link.default());
-  }, [dispatch]);
+  }, []);
 
   const array = [
     {
@@ -52,9 +51,9 @@ const AppHeader = () => {
     <header className={Style.header}>
       <nav className={Style.navigation}>
         <ul className={Style.list}>
-          {array?.map((item) => {
+          {array?.map((item, index) => {
             return (
-              <li key={v4()}>
+              <li key={`header_links_${index}`}>
                 <HeaderLinks element={item} />
               </li>
             );

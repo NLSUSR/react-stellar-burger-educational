@@ -162,3 +162,17 @@ export const protectedRoute = {
 
 export const authorized = { element: PropTypes.element.isRequired };
 export const unauthorized = { element: PropTypes.element.isRequired };
+
+export const ingredientDetails = {
+  styles: PropTypes.shape({
+    container: PropTypes.shape({
+      background: PropTypes.string,
+      border: PropTypes.number,
+      boxShadow: PropTypes.string,
+    }),
+    title: PropTypes.shape({
+      margin: PropTypes.number,
+      textAlign: PropTypes.string,
+    }),
+  }),
+};

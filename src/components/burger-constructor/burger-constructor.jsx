@@ -10,18 +10,15 @@ import rootDispatcher from "../../services/store/dispatchers/root-dispacher";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd/dist/hooks";
-import { v4 } from "uuid";
 import React from "react";
-
-
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
   const burger = useSelector((s) => s.burger);
 
-  const createOrder = useSelector((s) => s.order.createOrder.response);
-  const success = useSelector((s) => s.user.getUser.response?.success ?? false);
+  const createOrder = useSelector((s) => s.order.response);
+  const success = useSelector((s) => s.user.response?.success ?? false);
 
   const check = burger.bun.price !== 0;
 
@@ -39,19 +36,17 @@ const BurgerConstructor = () => {
   const { modalState, open, close } = useModal();
 
   React.useEffect(() => {
-    if (modalState === false) {
-      setButton({ text: "Оформить заказ" });
-    }
+    !modalState
+      ? setButton({ text: "Оформить заказ" })
+      : setButton({ text: "Готовится..." });
   }, [modalState]);
 
   const sendOrder = () => {
     const ids = array?.map((i) => i._id);
 
-    setButton({ text: "Готовится..." });
-
-    if (check && success) {
-      dispatch(rootDispatcher.createOrder(ids, setButton));
-    }
+    return check && success
+      ? dispatch(rootDispatcher.createOrder(ids, setButton))
+      : null;
   };
 
   const showOrder = React.useCallback(() => {
@@ -59,10 +54,9 @@ const BurgerConstructor = () => {
     open();
   }, [sendOrder, open]);
 
-    const hideOrder = React.useCallback(() => {
+  const hideOrder = React.useCallback(() => {
     dispatch(rootActions.burger.default());
     dispatch(rootActions.order.default());
-    dispatch(rootActions.counter.default());
     close();
   }, [dispatch, close]);
 
@@ -72,14 +66,9 @@ const BurgerConstructor = () => {
       isHover: monitor.isOver(),
     }),
     drop({ item }) {
-      const element = { ...item };
-      element.key = v4();
-      const unit = { _id: element._id, key: element.key };
-
       item.type !== "bun"
-        ? dispatch(rootActions.burger.add(element)) &&
-          dispatch(rootActions.counter.increment(unit))
-        : dispatch(rootActions.burger.replace(element));
+        ? dispatch(rootActions.burger.add(item))
+        : dispatch(rootActions.burger.replace(item));
     },
   });
 
@@ -87,7 +76,7 @@ const BurgerConstructor = () => {
     burger.others.length < 6 ? Style["hide-scroll"] : "custom-scroll";
 
   const Popup = () => (
-    <Modal key={v4()} close={hideOrder}>
+    <Modal close={hideOrder}>
       <OrderDetails>{createOrder?.order.number}</OrderDetails>
     </Modal>
   );

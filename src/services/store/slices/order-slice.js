@@ -3,15 +3,19 @@ import { createSlice } from "@reduxjs/toolkit";
 const orderSlice = createSlice({
   name: "order",
   initialState: {
-    createOrder: { response: null, error: null },
+    response: null,
+    error: null,
   },
   reducers: {
-    createOrder: (state, action) => {
-      state.createOrder.response = action.payload.response;
-      state.createOrder.error = action.payload.error;
+    response: (state, action) => {
+      state.response = { ...action.payload };
+    },
+    error: (state, action) => {
+      state.error = { ...action.payload };
     },
     default: (state) => {
-      state.createOrder = { response: null, error: null };
+      state.response = null;
+      state.error = null;
     },
   },
 });

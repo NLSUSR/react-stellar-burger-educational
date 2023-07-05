@@ -1,5 +1,6 @@
 import Style from "./form.module.sass";
 import constants from "../../../utils-for-application/constants";
+import useForm from "../../../services/hooks/useForm";
 
 import React from "react";
 import { useSelector } from "react-redux";
@@ -8,37 +9,32 @@ import { useLocation } from "react-router-dom";
 
 const Form = (props) => {
   const { buttons, code, email, name, password } = props;
-
   const location = useLocation();
-
-  const user = useSelector((s) => s.user.getUser.response?.user);
-
-  const [value, setValue] = React.useState({
-    name: user?.name ?? "",
-    email: user?.email ?? "",
-    password: "",
-  });
+  const user = useSelector((s) => s.user.response?.user);
 
   const [disabler, setDisabler] = React.useState("enabled");
+  const { values, handleChange, setValues } = useForm(
+    {
+      code: "",
+      email: user?.email ?? "",
+      name: user?.name ?? "",
+      password: "",
+    },
+    setDisabler
+  );
 
   React.useEffect(() => {
-    if (location.pathname === "/profile") {
-      setDisabler("disabled");
-    }
+    location.pathname === "/profile"
+      ? setDisabler("disabled")
+      : setDisabler("enabled");
   }, [setDisabler, location]);
-
-  const onChange = (e) => {
-    e.preventDefault();
-    setDisabler("enabled");
-    setValue({ ...value, [e.target.name]: e.target.value });
-  };
 
   return (
     <form
       action={"#"}
       className={Style.form}
-      onReset={(e) => buttons?.reset.reset(e, setValue, setDisabler)}
-      onSubmit={(e) => buttons?.submit.submit(e, value)}
+      onSubmit={(e) => buttons?.submit.submit(e, values)}
+      onReset={(e) => buttons?.reset.reset(e, setValues, setDisabler)}
     >
       <fieldset className={Style.fieldset}>
         <RSB.Input
@@ -47,9 +43,9 @@ const Form = (props) => {
           type={name?.type}
           icon={name?.icon ? "EditIcon" : null}
           placeholder={name?.placeholder}
-          onChange={(e) => onChange(e)}
+          onChange={(e) => handleChange(e)}
           name={"name"}
-          value={value?.name}
+          value={values?.name}
           autoComplete="off"
         />
         <RSB.EmailInput
@@ -58,9 +54,9 @@ const Form = (props) => {
           type={email?.type}
           icon={email?.icon ? "EditIcon" : null}
           placeholder={email?.placeholder}
-          onChange={(e) => onChange(e)}
+          onChange={(e) => handleChange(e)}
           name={"email"}
-          value={value?.email}
+          value={values?.email}
           autoComplete="off"
         />
         <RSB.PasswordInput
@@ -69,9 +65,9 @@ const Form = (props) => {
           type={password?.type}
           icon={password?.icon ? "EditIcon" : null}
           placeholder={password?.placeholder}
-          onChange={(e) => onChange(e)}
+          onChange={(e) => handleChange(e)}
           name={"password"}
-          value={value?.password}
+          value={values?.password}
           autoComplete="off"
         />
         <RSB.Input
@@ -79,9 +75,9 @@ const Form = (props) => {
           disabled={code?.state === "disabled" ? true : false}
           type={code?.type}
           placeholder={code?.placeholder}
-          onChange={(e) => onChange(e)}
+          onChange={(e) => handleChange(e)}
           name={"code"}
-          value={value?.code ?? ""}
+          value={values?.code ?? ""}
         />
       </fieldset>
       <div className={Style[`${disabler}`]} style={{ flexDirection: "row" }}>

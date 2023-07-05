@@ -12,9 +12,9 @@ const ResetPassword = () => {
   const location = useLocation();
 
   React.useEffect(() => {
-    if (location.state !== "forgot-password") {
-      navigate("/forgot-password", { replace: true });
-    }
+    location.state !== "forgot-password"
+      ? navigate("/forgot-password", { replace: true })
+      : navigate("/reset-password", { replace: true });
   }, []);
 
   const callback = (e, value) => {

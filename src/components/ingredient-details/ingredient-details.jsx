@@ -1,14 +1,17 @@
 import Style from "./ingredient-details.module.sass";
+import constants from "../../utils-for-application/constants";
 
-import { v4 } from "uuid";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import React from "react";
 
-const IngredientDetails = () => {
-  const params = useParams()
-  const ingredients = useSelector((s) => s.data.getData.response?.data);
-  
+const IngredientDetails = (props) => {
+  const { container, title } = props.styles ?? {};
+  console.log("styles", props.styles);
+
+  const params = useParams();
+  const ingredients = useSelector((s) => s.data.response?.data);
+
   const data = React.useMemo(
     () => ingredients?.find((item) => item._id === params.id),
     [ingredients, params.id]
@@ -34,13 +37,15 @@ const IngredientDetails = () => {
   ];
 
   return (
-    <section className={Style.container}>
-      <h2 className={Style.title}>Детали ингредиента</h2>
+    <section className={Style.container} style={!!container ? container : {}}>
+      <h2 className={Style.title} style={!!title ? title : {}}>
+        Детали ингредиента
+      </h2>
       <img className={Style.image} src={data?.image_large} alt={data?.name} />
       <p className={Style.name}>{data?.name}</p>
       <ul className={Style.list}>
-        {values?.map((item) => (
-          <li key={v4()} className={Style.item}>
+        {values?.map((item, index) => (
+          <li key={`ingredient_details_${index}`} className={Style.item}>
             <p className={Style.nutrition}>{item.nutrition}</p>
             <p className={Style.value}>{item.value}</p>
           </li>
@@ -49,5 +54,7 @@ const IngredientDetails = () => {
     </section>
   );
 };
+
+IngredientDetails.propTypes = constants.types.ingredientDetails;
 
 export default IngredientDetails;

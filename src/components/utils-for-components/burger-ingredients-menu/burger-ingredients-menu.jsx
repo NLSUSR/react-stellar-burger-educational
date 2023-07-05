@@ -1,7 +1,6 @@
 import Style from "./burger-ingredients-menu.module.sass";
 import constants from "../../../utils-for-application/constants";
 
-import { v4 } from "uuid";
 import * as RSB from "@ya.praktikum/react-developer-burger-ui-components";
 
 const BurgerIngredientsMenu = ({ tabs, current }) => {
@@ -13,8 +12,8 @@ const BurgerIngredientsMenu = ({ tabs, current }) => {
 
   return (
     <ul className={Style.list}>
-      {tabs?.map((item) => (
-        <li key={v4()} className={Style.name}>
+      {tabs?.map((item, index) => (
+        <li key={`burger_ingredients_menu_${index}`} className={Style.name}>
           <RSB.Tab
             active={current === item.type}
             value={item.type}

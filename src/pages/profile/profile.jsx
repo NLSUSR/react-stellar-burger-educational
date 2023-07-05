@@ -1,5 +1,4 @@
 import Style from "./profile.module.sass";
-import AppHeader from "../../components/app-header/app-header";
 import ProfileLinks from "../utils-for-pages/profile-links/profile-links";
 import Form from "../utils-for-pages/form/form";
 import rootActions from "../../services/store/actions/root-action";
@@ -12,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 const Profile = () => {
   const dispatch = useDispatch();
 
-  const user = useSelector((s) => s.user.getUser.response?.user);
+  const user = useSelector((s) => s.user.response?.user ?? "");
 
   const callback = (e, value) => {
     e.preventDefault();
@@ -31,6 +30,7 @@ const Profile = () => {
   };
 
   React.useEffect(() => {
+    dispatch(rootActions.link.default());
     dispatch(rootActions.link.profile(true));
     dispatch(rootActions.link.profileMenu(true));
   }, [dispatch]);
@@ -40,7 +40,6 @@ const Profile = () => {
 
   return (
     <section className={Style.container}>
-      <AppHeader />
       <div className={Style.content}>
         <ProfileLinks message={constants.messages.profile} />
         <Form

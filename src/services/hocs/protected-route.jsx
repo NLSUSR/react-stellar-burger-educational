@@ -4,24 +4,27 @@ import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 
 const ProtectedRoute = ({ unauthorized, element }) => {
-  const success = useSelector((s) => s.user.getUser.response?.success ?? false);
-  const cheked = useSelector((s) => s.user.cheked);
+  const success = useSelector((s) => s.user.response?.success ?? false);
+  const check = useSelector((s) => s.user.check);
   const location = useLocation();
 
-  if (!cheked) {
-    return null;
-  }
+  const endpoint = ({ to, state }) => {
+    return <Navigate to={to} state={state} />;
+  };
 
-  if (unauthorized && success) {
-    const { from } = location.state || { from: { pathname: "/" } };
-    return <Navigate to={from} />;
-  }
+  const toBack = {
+    to: (location.state && location.state.from) || { pathname: "/" },
+  };
 
-  if (!unauthorized && !success) {
-    return <Navigate to="/login" state={{ from: location }} />;
-  }
+  const toLogin = { to: "/login", state: { from: location } };
 
-  return element;
+  return !check
+    ? null
+    : unauthorized && success
+    ? endpoint(toBack)
+    : !unauthorized && !success
+    ? endpoint(toLogin)
+    : element;
 };
 
 const Authorized = ({ element }) => (

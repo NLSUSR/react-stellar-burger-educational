@@ -7,8 +7,7 @@ import React from "react";
 
 const IngredientDetails = (props) => {
   const { container, title } = props.styles ?? {};
-  console.log("styles", props.styles);
-
+  
   const params = useParams();
   const ingredients = useSelector((s) => s.data.response?.data);
 

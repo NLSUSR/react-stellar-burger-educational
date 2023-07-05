@@ -6,7 +6,6 @@ const BurgerConstructorRecipe = ({ array }) => {
   return (
     <ul className={Style.list}>
       {array?.map((item, index) => {
-        console.log('item', item)
         return item.type !== "bun" ? (
           <li key={item.key}>
             <BurgerConstructorItem item={item} index={index} />

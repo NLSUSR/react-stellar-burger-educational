@@ -27,8 +27,9 @@ const Application = () => {
   return (
     <section className={Style.container}>
       <AppHeader />
-      <div className={Style.content}></div>
-      <Allocator />
+      <div className={Style.content}>
+        <Allocator />
+      </div>
     </section>
   );
 };

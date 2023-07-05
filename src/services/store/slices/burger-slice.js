@@ -15,10 +15,16 @@ const burgerSlice = createSlice({
     count: [],
   },
   reducers: {
-    add: (state, action) => {
-      const item = { ...action.payload, key: v4() };
-      state.others.push(item);
-      state.count.push({ _id: item._id, key: item.key });
+    add: {
+      reducer: (state, action) => {
+        const ingredient = action.payload;
+        state.others.push(ingredient);
+        state.count.push({ _id: ingredient._id, key: ingredient.key });
+      },
+      prepare: (item) => {
+        const key = v4();
+        return { payload: { ...item, key } };
+      },
     },
     remove: (state, action) => {
       state.others = state.others.filter((i) => i.key !== action.payload.key);

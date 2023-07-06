@@ -12,7 +12,6 @@ const BurgerConstructorItem = ({ item, index }) => {
 
   const remove = (item) => {
     dispatch(rootActions.burger.remove(item));
-    dispatch(rootActions.counter.decrement({ key: item.key }));
   };
 
   const others = useSelector((s) => s.burger.others);
@@ -61,6 +60,6 @@ const BurgerConstructorItem = ({ item, index }) => {
   );
 };
 
-BurgerConstructorItem.propTypes = constants.types.burgerConstructorItem
+BurgerConstructorItem.propTypes = constants.types.burgerConstructorItem;
 
 export default BurgerConstructorItem;

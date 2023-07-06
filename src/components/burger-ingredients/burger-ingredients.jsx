@@ -5,12 +5,11 @@ import BurgerIngredientsMenu from "../utils-for-components/burger-ingredients-me
 import BurgerIngredientsCollections from "../utils-for-components/burger-ingredients-collections/burger-ingredients-collections";
 
 import React from "react";
-import { v4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
-  const data = useSelector((s) => s.data.getData.response?.data);
+  const data = useSelector((s) => s.data.response?.data);
   const ingredients = useSelector((s) => s.ingredients);
 
   React.useEffect(() => {
@@ -66,19 +65,16 @@ const BurgerIngredients = () => {
   const array = [
     {
       ref: refs.bun,
-      key: v4(),
       title: constants.keys.names.buns,
       array: ingredients?.buns ?? [],
     },
     {
       ref: refs.sauce,
-      key: v4(),
       title: constants.keys.names.sauces,
       array: ingredients?.sauces ?? [],
     },
     {
       ref: refs.main,
-      key: v4(),
       title: constants.keys.names.mains,
       array: ingredients?.mains ?? [],
     },
@@ -93,11 +89,10 @@ const BurgerIngredients = () => {
         ref={refs.parent}
         onScroll={setCurrentOnScroll}
       >
-        {array?.map((item) => {
+        {array?.map((item,index) => {
           return (
-            <li key={v4()} ref={item.ref}>
+            <li key={`burger-ingredients_${index}`} ref={item.ref}>
               <BurgerIngredientsCollections
-                key={item.key}
                 title={item.title}
                 array={item.array}
               />

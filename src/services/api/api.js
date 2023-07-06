@@ -6,6 +6,7 @@ const Api = class {
   #methods;
   #headers;
   #errors;
+
   constructor(object) {
     this.#resource = object.resource;
     this.#endpoints = object.endpoints;
@@ -34,6 +35,12 @@ const Api = class {
       : Promise.reject(`Ошибка: ${this.#checkError(r.status)}`);
   };
 
+  #checkSuccess = (response) => {
+    return response && response.success
+      ? Promise.resolve(response)
+      : Promise.reject(`Ответ не success: ${response}`);
+  };
+
   #getHeadlines = (method, data) => {
     return {
       method: method,
@@ -44,53 +51,56 @@ const Api = class {
 
   #getEndpoints = (endpoints) => `${this.#resource + endpoints}`;
 
-  #getRequest = async (endpoints, method, data) =>
-    await fetch(
-      this.#getEndpoints(endpoints),
-      this.#getHeadlines(method, data)
-    );
+  #getRequest = (endpoints, method, data) =>
+    fetch(this.#getEndpoints(endpoints), this.#getHeadlines(method, data));
 
-  #checkReceiving = async (endpoint, method, data) =>
-    await this.#checkResponse(await this.#getRequest(endpoint, method, data));
+  #checkReceiving = (endpoint, method, data) =>
+    this.#getRequest(endpoint, method, data)
+      .then((response) => this.#checkResponse(response))
+      .then((result) => this.#checkSuccess(result))
+      .catch((e) => Promise.reject(e));
 
-  #sendRequest = async (endpoints, method, data) => {
-    return await this.#checkReceiving(endpoints, method, data);
+  #sendRequest = (endpoints, method, data) => {
+    return this.#checkReceiving(endpoints, method, data).catch((e) => {
+      this.#responseError(e);
+    });
   };
 
-  #refreshToken = async (data) => {
-    return await this.#sendRequest(
+  #refreshToken = (data) => {
+    return this.#sendRequest(
       this.#endpoints.token,
       this.#methods.post,
       data
-    );
+    ).catch((e) => {
+      this.#responseError(e);
+    });
   };
 
-  #requestWithRefresh = async (endpoint, method, data) => {
-    try {
-      const response = await this.#getRequest(endpoint, method, data);
-      return await this.#checkResponse(response);
-    } catch (e) {
-      if (e.message === "jwt expired") {
-        const refreshData = await this.#refreshToken({
-          token: cookie.get("refresh"),
-        });
-
-        if (!refreshData.success) {
-          return this.responseError(refreshData);
-        }
-
-        cookie.set("refresh", refreshData.refreshToken);
-        cookie.set("token", refreshData.accessToken);
-
-        const response = await this.#sendRequest(endpoint, method, data);
-        return await this.#checkResponse(response);
-      } else {
-        return this.responseError(e);
-      }
-    }
+  #requestWithRefresh = (endpoint, method, data) => {
+    return this.#getRequest(endpoint, method, data)
+      .then((response) => this.#checkResponse(response))
+      .then((result) => this.#checkSuccess(result))
+      .catch((e) =>
+        e.message !== "jwt expired"
+          ? this.#responseError(e)
+          : this.#refreshToken({
+              token: cookie.get("refresh"),
+            }).then(
+              (refreshData) => (
+                this.#sendRequest(endpoint, method, data).catch((e) => {
+                  this.#responseError(e);
+                }),
+                cookie.set("refresh", refreshData.refreshToken),
+                cookie.set("token", refreshData.accessToken),
+                !refreshData.success ? this.#responseError(refreshData) : null
+              )
+            )
+      );
   };
 
-  responseError = (e) => console.error(e);
+  #responseError = (e) => {
+    throw e;
+  };
 
   getData = async () => {
     return await this.#sendRequest(
@@ -154,7 +164,10 @@ const Api = class {
   };
 
   getUser = async () => {
-    return await this.#requestWithRefresh(this.#endpoints.user, this.#methods.get);
+    return await this.#requestWithRefresh(
+      this.#endpoints.user,
+      this.#methods.get
+    );
   };
 };
 

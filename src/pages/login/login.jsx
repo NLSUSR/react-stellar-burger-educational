@@ -3,19 +3,21 @@ import rootDispatcher from "../../services/store/dispatchers/root-dispacher";
 import constants from "../../utils-for-application/constants";
 
 import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import React from "react";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
 
-  const callback = (e, value) => {
+  const callback = React.useCallback((e, value) => {
     e.preventDefault();
-    dispatch(rootDispatcher.login(value, navigate, location));
-  };
+    dispatch(rootDispatcher.login(value));
+  }, []);
 
-  const button = { state: "submit", name: "Войти", submit: callback };
+  const button = {
+    state: "submit",
+    name: "Войти",
+    submit: callback,
+  };
 
   return (
     <Identification {...constants.loginData} buttons={{ submit: button }} />

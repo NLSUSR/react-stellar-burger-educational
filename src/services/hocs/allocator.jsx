@@ -25,7 +25,7 @@ const Allocator = () => {
   const location = RRD.useLocation();
 
   const background = location.state && location.state.background;
-  const ingredients = useSelector((s) => s.data.getData.response?.data);
+  const ingredients = useSelector((s) => s.data.response?.data);
 
   const handleClose = () => {
     navigate(-1);

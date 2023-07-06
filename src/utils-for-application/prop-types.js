@@ -119,13 +119,13 @@ export const form = {
     placeholder: PropTypes.string,
     state: PropTypes.string,
     type: PropTypes.string,
-  }).isRequired,
+  }),
   name: PropTypes.shape({
     icon: PropTypes.bool,
     placeholder: PropTypes.string,
     state: PropTypes.string,
     type: PropTypes.string,
-  }).isRequired,
+  }),
   password: PropTypes.shape({
     icon: PropTypes.bool,
     placeholder: PropTypes.string,
@@ -162,3 +162,17 @@ export const protectedRoute = {
 
 export const authorized = { element: PropTypes.element.isRequired };
 export const unauthorized = { element: PropTypes.element.isRequired };
+
+export const ingredientDetails = {
+  styles: PropTypes.shape({
+    container: PropTypes.shape({
+      background: PropTypes.string,
+      border: PropTypes.number,
+      boxShadow: PropTypes.string,
+    }),
+    title: PropTypes.shape({
+      margin: PropTypes.number,
+      textAlign: PropTypes.string,
+    }),
+  }),
+};

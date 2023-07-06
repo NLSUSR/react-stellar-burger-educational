@@ -2,14 +2,12 @@ import Style from "./burger-constructor-recipe.module.sass";
 import constants from "../../../utils-for-application/constants";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 
-import { v4 } from "uuid";
-
 const BurgerConstructorRecipe = ({ array }) => {
   return (
     <ul className={Style.list}>
       {array?.map((item, index) => {
         return item.type !== "bun" ? (
-          <li key={v4()}>
+          <li key={item.key}>
             <BurgerConstructorItem item={item} index={index} />
           </li>
         ) : null;

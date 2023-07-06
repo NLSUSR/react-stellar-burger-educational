@@ -1,5 +1,4 @@
 import Style from "./profile.module.sass";
-import AppHeader from "../../components/app-header/app-header";
 import ProfileLinks from "../utils-for-pages/profile-links/profile-links";
 import Form from "../utils-for-pages/form/form";
 import rootActions from "../../services/store/actions/root-action";
@@ -7,12 +6,10 @@ import rootDispatcher from "../../services/store/dispatchers/root-dispacher";
 import constants from "../../utils-for-application/constants";
 
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Profile = () => {
   const dispatch = useDispatch();
-
-  const user = useSelector((s) => s.user.getUser.response?.user);
 
   const callback = (e, value) => {
     e.preventDefault();
@@ -24,13 +21,14 @@ const Profile = () => {
     setDisabler("disabled");
     setValue({
       code: "",
-      email: user?.email ?? "",
-      name: user?.name ?? "",
+      email: "",
+      name: "",
       password: "",
     });
   };
 
   React.useEffect(() => {
+    dispatch(rootActions.link.default());
     dispatch(rootActions.link.profile(true));
     dispatch(rootActions.link.profileMenu(true));
   }, [dispatch]);
@@ -40,7 +38,6 @@ const Profile = () => {
 
   return (
     <section className={Style.container}>
-      <AppHeader />
       <div className={Style.content}>
         <ProfileLinks message={constants.messages.profile} />
         <Form

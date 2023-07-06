@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import done from "../../../images/done.svg";
+import { v4 } from "uuid";
 
 const burgerSlice = createSlice({
   name: "burger",
@@ -11,13 +12,23 @@ const burgerSlice = createSlice({
       price: 0,
     },
     others: [],
+    count: [],
   },
   reducers: {
-    add: (state, action) => {
-      state.others.push(action.payload);
+    add: {
+      reducer: (state, action) => {
+        const ingredient = action.payload;
+        state.others.push(ingredient);
+        state.count.push({ _id: ingredient._id, key: ingredient.key });
+      },
+      prepare: (item) => {
+        const key = v4();
+        return { payload: { ...item, key } };
+      },
     },
     remove: (state, action) => {
       state.others = state.others.filter((i) => i.key !== action.payload.key);
+      state.count = state.count.filter((i) => i.key !== action.payload.key);
     },
     sort: (state, action) => {
       state.others = action.payload;
@@ -32,6 +43,7 @@ const burgerSlice = createSlice({
         price: 0,
       };
       state.others = [];
+      state.count = [];
     },
   },
 });

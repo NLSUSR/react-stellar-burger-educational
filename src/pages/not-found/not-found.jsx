@@ -1,5 +1,4 @@
 import Style from "./not-found.module.sass";
-import AppHeader from "../../components/app-header/app-header";
 
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +12,6 @@ const NotFound = () => {
 
   return (
     <section className={Style.container}>
-      <AppHeader />
       <div className={Style.content}>
         <p className={Style.number} children={"404"} />
         <p className={Style.string} children={"Не найдено🤷‍♂️"} />

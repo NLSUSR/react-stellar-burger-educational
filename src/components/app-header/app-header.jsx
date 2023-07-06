@@ -14,7 +14,7 @@ const AppHeader = () => {
 
   React.useEffect(() => {
     dispatch(rootActions.link.default());
-  }, []);
+  }, [dispatch]);
 
   const array = [
     {

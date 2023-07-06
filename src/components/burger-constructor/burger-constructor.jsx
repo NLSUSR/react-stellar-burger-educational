@@ -41,13 +41,13 @@ const BurgerConstructor = () => {
       : setButton({ text: "Готовится..." });
   }, [modalState]);
 
-  const sendOrder = () => {
+  const sendOrder = React.useCallback(() => {
     const ids = array?.map((i) => i._id);
 
     return check && success
       ? dispatch(rootDispatcher.createOrder(ids, setButton))
       : null;
-  };
+  }, [array, check, dispatch, success]);
 
   const showOrder = React.useCallback(() => {
     sendOrder();

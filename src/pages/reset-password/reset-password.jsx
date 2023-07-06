@@ -15,7 +15,7 @@ const ResetPassword = () => {
     location.state !== "forgot-password"
       ? navigate("/forgot-password", { replace: true })
       : navigate("/reset-password", { replace: true });
-  }, []);
+  }, [location.state, navigate]);
 
   const callback = (e, value) => {
     e.preventDefault();

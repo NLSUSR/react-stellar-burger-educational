@@ -11,7 +11,7 @@ const Login = () => {
   const callback = React.useCallback((e, value) => {
     e.preventDefault();
     dispatch(rootDispatcher.login(value));
-  }, []);
+  }, [dispatch]);
 
   const button = {
     state: "submit",

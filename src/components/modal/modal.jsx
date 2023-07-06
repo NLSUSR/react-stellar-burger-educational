@@ -17,8 +17,7 @@ const Modal = ({ close, children }) => {
     return () => {
       document.removeEventListener("keydown", handleEscapeClose);
     };
-    // eslint-disable-next-line
-  }, []);
+  });
 
   return createPortal(
     <section className={Style.container}>

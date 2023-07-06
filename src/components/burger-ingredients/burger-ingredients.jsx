@@ -14,7 +14,7 @@ const BurgerIngredients = () => {
 
   React.useEffect(() => {
     dispatch(rootActions.ingredients.distribute(data));
-  }, [data, dispatch]);
+  }, [dispatch, data]);
 
   const refs = {
     parent: React.useRef(null),
@@ -89,7 +89,7 @@ const BurgerIngredients = () => {
         ref={refs.parent}
         onScroll={setCurrentOnScroll}
       >
-        {array?.map((item,index) => {
+        {array?.map((item, index) => {
           return (
             <li key={`burger-ingredients_${index}`} ref={item.ref}>
               <BurgerIngredientsCollections

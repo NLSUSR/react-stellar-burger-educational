@@ -12,17 +12,17 @@ const Application = () => {
 
   React.useEffect(() => {
     dispatch(rootDispatcher.getData());
-  }, []);
+  }, [dispatch]);
 
   React.useEffect(() => {
     dispatch(rootDispatcher.checkAuthorization());
-  }, []);
+  }, [dispatch]);
 
   React.useEffect(() => {
     document.location.pathname === "/"
       ? dispatch(rootActions.link.constructor(true))
       : dispatch(rootActions.link.default());
-  }, []);
+  }, [dispatch]);
 
   return (
     <section className={Style.container}>
